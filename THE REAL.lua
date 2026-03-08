@@ -41,7 +41,7 @@ local Settings = {
     WalkSpeed=16, JumpPower=50, UITransparency=0, ConfigName='LiteExtreme_V43', FarmTargetName='',
     AutoRoka=false, EngineActive=true, AdvancedScan=false, ScanInterval=1.5,
     AutoPlayAgain=true, ClickSpeed=0.015, MacroInterval=0.02, AutoRejoin=true,
-    AutoDialog=true, StealthMode=false, AntiAFK=true
+    AutoDialog=true, StealthMode=false, AntiAFK=true, AutoStand=false
 }
 
 local function LoadConfig()
@@ -89,53 +89,145 @@ local WikiData = {
 local UI_Master = {Pages = {}, Buttons = {}, Elements = {}}
 function UI_Master:Init()
     local SG = Instance.new('ScreenGui', CoreGui); SG.Name = 'BizarreLiteExtreme_V43'; SG.IgnoreGuiInset = true; SG.ResetOnSpawn = false
-    local Main = Instance.new('Frame', SG); Main.Size = UDim2now(0, 960, 0, 680); Main.Position = UDim2now(0.5, -480, 0.5, -340); Main.BackgroundColor3 = DarkBg; Main.BackgroundTransparency = 0.15; Main.BorderSizePixel = 0; Instance.new('UICorner', Main).CornerRadius = UDim.new(0, 8)
-    local Sidebar = Instance.new('Frame', Main); Sidebar.Size = UDim2now(0, 200, 1, 0); Sidebar.BackgroundColor3 = Color3.fromRGB(8, 20, 10); Sidebar.BackgroundTransparency = 0.2; Sidebar.BorderSizePixel = 1; Sidebar.BorderColor3 = AccentColor
-    
-    local Branding = Instance.new('TextLabel', Sidebar); Branding.Size = UDim2now(1, 0, 0, 80); Branding.Text = 'LITE EXTREME'; Branding.TextColor3 = Color3.new(1,1,1); Branding.Font = Enum.Font.GothamBold; Branding.TextSize = 22; Branding.BackgroundTransparency = 1
-    
-    local IdentityPanel = Instance.new('Frame', Sidebar); IdentityPanel.Size = UDim2now(1, -16, 0, 130); IdentityPanel.Position = UDim2now(0, 8, 1, -140); IdentityPanel.BackgroundColor3 = Color3.new(0,0,0); IdentityPanel.BackgroundTransparency = 0; Instance.new('UICorner', IdentityPanel)
-    local alb = Instance.new('ImageLabel', IdentityPanel); alb.Size = UDim2now(0, 46, 0, 46); alb.Position = UDim2now(0, 8, 0, 8); alb.Image = 'rbxthumb://type=AvatarHeadShot&id='..Client.UserId..'&w=150&h=150'; alb.BackgroundTransparency = 1; Instance.new('UICorner', alb).CornerRadius = UDim.new(1, 0)
-    local sng = Instance.new('TextLabel', IdentityPanel); sng.Size = UDim2now(1, -60, 0, 18); sng.Position = UDim2now(0, 60, 0, 8); sng.Text = Client.DisplayName or Client.Name; sng.TextColor3 = Color3.new(1,1,1); sng.Font = Enum.Font.GothamBold; sng.TextSize = 13; sng.TextXAlignment = 0; sng.BackgroundTransparency = 1; sng.ClipsDescendants = true
-    local playT = Instance.new('TextLabel', IdentityPanel); playT.Name = "PT"; playT.Size = UDim2now(1, -16, 0, 14); playT.Position = UDim2now(0, 8, 0, 60); playT.Text = 'Playtime: 0h 0m'; playT.TextColor3 = Color3.fromRGB(200, 200, 200); playT.Font = Enum.Font.Gotham; playT.TextSize = 13; playT.TextXAlignment = 0; playT.BackgroundTransparency = 1
-    local yenT = Instance.new('TextLabel', IdentityPanel); yenT.Name = "YT"; yenT.Size = UDim2now(1, -16, 0, 14); yenT.Position = UDim2now(0, 8, 0, 80); yenT.Text = 'Yen: 0'; yenT.TextColor3 = Color3.fromRGB(240, 215, 0); yenT.Font = Enum.Font.Gotham; yenT.TextSize = 13; yenT.TextXAlignment = 0; yenT.BackgroundTransparency = 1
-    local totalYen = Instance.new('TextLabel', IdentityPanel); totalYen.Name = "TY"; totalYen.Size = UDim2now(1, -16, 0, 14); totalYen.Position = UDim2now(0, 8, 0, 100); totalYen.Text = 'Total Yen: 0'; totalYen.TextColor3 = Color3.fromRGB(255, 190, 0); totalYen.Font = Enum.Font.GothamBold; totalYen.TextSize = 13; totalYen.TextXAlignment = 0; totalYen.BackgroundTransparency = 1
-    
-    local Content = Instance.new('Frame', Main); Content.Size = UDim2now(1, -220, 1, -80); Content.Position = UDim2now(0, 210, 0, 65); Content.BackgroundTransparency = 1
-    local TopBar = Instance.new('Frame', Main); TopBar.Size = UDim2now(1, -200, 0, 65); TopBar.Position = UDim2now(0, 200, 0, 0); TopBar.BackgroundColor3 = Color3.fromRGB(8, 20, 10); TopBar.BorderSizePixel = 1; TopBar.BorderColor3 = AccentColor
-    
-    local Title = Instance.new('TextLabel', TopBar); Title.Size = UDim2now(0, 250, 1, 0); Title.Position = UDim2now(0, 20, 0, 0); Title.Text = 'BIZARRE LINEAGE'; Title.TextColor3 = Color3.new(1,1,1); Title.Font = Enum.Font.GothamBold; Title.TextSize = 20; Title.BackgroundTransparency = 1; Title.TextXAlignment = 0
-    
-    local StatusBox = Instance.new('Frame', TopBar); StatusBox.Size = UDim2now(0, 140, 0, 45); StatusBox.Position = UDim2now(1, -160, 0, 10); StatusBox.BackgroundColor3 = Color3.fromRGB(10, 30, 15); StatusBox.BackgroundTransparency = 0.2; Instance.new('UICorner', StatusBox)
-    local fpsL = Instance.new('TextLabel', StatusBox); fpsL.Size = UDim2now(1, 0, 1, 0); fpsL.Text = 'FPS: 0'; fpsL.TextColor3 = AccentColor; fpsL.Font = Enum.Font.GothamBold; fpsL.TextSize = 14; fpsL.BackgroundTransparency = 1
-    
-    local ItemPanel = Instance.new('Frame', Main); ItemPanel.Size = UDim2now(0, 200, 1, 0); ItemPanel.Position = UDim2now(1, 15, 0, 0); ItemPanel.BackgroundColor3 = DarkBg; ItemPanel.BackgroundTransparency = 0.15; ItemPanel.BorderSizePixel = 1; ItemPanel.BorderColor3 = AccentColor
-    local iT = Instance.new('TextLabel', ItemPanel); iT.Size = UDim2now(1, 0, 0, 40); iT.Text = 'MAP ITEMS'; iT.TextColor3 = AccentColor; iT.Font = Enum.Font.GothamBold; iT.TextSize = 16; iT.BackgroundTransparency = 1
-    local iList = Instance.new('ScrollingFrame', ItemPanel); iList.Name = "List"; iList.Size = UDim2now(1, -10, 1, -50); iList.Position = UDim2now(0, 5, 0, 40); iList.BackgroundTransparency = 1; iList.BorderSizePixel = 0; iList.ScrollBarThickness = 2; iList.AutomaticCanvasSize = Enum.AutomaticSize.Y; Instance.new("UIListLayout", iList).Padding = UDim.new(0, 2)
+    local Main = Instance.new('Frame', SG)
+    Main.Size = UDim2now(0, 980, 0, 680)
+    Main.Position = UDim2now(0.5, -490, 0.5, -340)
+    Main.BackgroundColor3 = DarkBg; Main.BackgroundTransparency = 0.08; Main.BorderSizePixel = 0
+    Instance.new('UICorner', Main).CornerRadius = UDim.new(0, 10)
+    Instance.new('UIStroke', Main).Color = AccentColor
+
+    -- Sidebar (fixed width, uses UIListLayout so tabs never overlap)
+    local Sidebar = Instance.new('Frame', Main)
+    Sidebar.Size = UDim2now(0, 210, 1, 0)
+    Sidebar.BackgroundColor3 = Color3.fromRGB(6, 16, 8); Sidebar.BackgroundTransparency = 0.1; Sidebar.BorderSizePixel = 0
+    Instance.new('UICorner', Sidebar).CornerRadius = UDim.new(0, 10)
+
+    -- Sidebar accent divider
+    local SideDiv = Instance.new('Frame', Sidebar); SideDiv.Size = UDim2now(0, 2, 1, 0); SideDiv.Position = UDim2now(1, -2, 0, 0); SideDiv.BackgroundColor3 = AccentColor; SideDiv.BorderSizePixel = 0
+
+    local Branding = Instance.new('Frame', Sidebar); Branding.Size = UDim2now(1, 0, 0, 72); Branding.BackgroundTransparency = 1
+    local BrandTitle = Instance.new('TextLabel', Branding); BrandTitle.Size = UDim2now(1, -20, 0, 28); BrandTitle.Position = UDim2now(0, 10, 0, 10); BrandTitle.Text = 'LITE EXTREME'; BrandTitle.TextColor3 = AccentColor; BrandTitle.Font = Enum.Font.GothamBold; BrandTitle.TextSize = 20; BrandTitle.TextXAlignment = 0; BrandTitle.BackgroundTransparency = 1
+    local BrandSub = Instance.new('TextLabel', Branding); BrandSub.Size = UDim2now(1, -20, 0, 14); BrandSub.Position = UDim2now(0, 10, 0, 40); BrandSub.Text = 'BIZARRE LINEAGE MOD'; BrandSub.TextColor3 = Color3.fromRGB(100, 160, 100); BrandSub.Font = Enum.Font.Gotham; BrandSub.TextSize = 11; BrandSub.TextXAlignment = 0; BrandSub.BackgroundTransparency = 1
+
+    -- Tab scroll container (so tabs never get cut off)
+    local TabScroll = Instance.new('ScrollingFrame', Sidebar)
+    TabScroll.Name = 'TabScroll'
+    TabScroll.Size = UDim2now(1, -4, 1, -210)
+    TabScroll.Position = UDim2now(0, 2, 0, 75)
+    TabScroll.BackgroundTransparency = 1; TabScroll.ScrollBarThickness = 0; TabScroll.AutomaticCanvasSize = Enum.AutomaticSize.Y; TabScroll.BorderSizePixel = 0
+    local TabLayout = Instance.new('UIListLayout', TabScroll); TabLayout.Padding = UDim.new(0, 4); TabLayout.SortOrder = Enum.SortOrder.LayoutOrder
+    local TabPad = Instance.new('UIPadding', TabScroll); TabPad.PaddingLeft = UDim.new(0, 8); TabPad.PaddingRight = UDim.new(0, 8); TabPad.PaddingTop = UDim.new(0, 4)
+    self.TabScroll = TabScroll
+
+    -- Identity panel at the bottom of the sidebar
+    local IdentityPanel = Instance.new('Frame', Sidebar)
+    IdentityPanel.Size = UDim2now(1, -16, 0, 120)
+    IdentityPanel.Position = UDim2now(0, 8, 1, -128)
+    IdentityPanel.BackgroundColor3 = Color3.fromRGB(8, 20, 10); IdentityPanel.BackgroundTransparency = 0.2; IdentityPanel.BorderSizePixel = 0
+    Instance.new('UICorner', IdentityPanel).CornerRadius = UDim.new(0, 8)
+    Instance.new('UIStroke', IdentityPanel).Color = Color3.fromRGB(30, 60, 35)
+
+    local alb = Instance.new('ImageLabel', IdentityPanel); alb.Size = UDim2now(0, 48, 0, 48); alb.Position = UDim2now(0, 10, 0, 8); alb.Image = 'rbxthumb://type=AvatarHeadShot&id='..Client.UserId..'&w=150&h=150'; alb.BackgroundTransparency = 1; Instance.new('UICorner', alb).CornerRadius = UDim.new(1, 0)
+    local sng = Instance.new('TextLabel', IdentityPanel); sng.Size = UDim2now(1, -70, 0, 18); sng.Position = UDim2now(0, 66, 0, 8); sng.Text = Client.DisplayName or Client.Name; sng.TextColor3 = Color3.new(1,1,1); sng.Font = Enum.Font.GothamBold; sng.TextSize = 13; sng.TextXAlignment = 0; sng.BackgroundTransparency = 1; sng.ClipsDescendants = true
+    local nameSub = Instance.new('TextLabel', IdentityPanel); nameSub.Size = UDim2now(1,-70,0,14); nameSub.Position = UDim2now(0,66,0,28); nameSub.Text = '@'..Client.Name; nameSub.TextColor3 = Color3.fromRGB(120,160,120); nameSub.Font = Enum.Font.Gotham; nameSub.TextSize = 11; nameSub.TextXAlignment = 0; nameSub.BackgroundTransparency = 1
+
+    local playT = Instance.new('TextLabel', IdentityPanel); playT.Name = "PT"; playT.Size = UDim2now(1, -16, 0, 14); playT.Position = UDim2now(0, 10, 0, 62); playT.Text = 'Playtime: 0h 0m'; playT.TextColor3 = Color3.fromRGB(180, 180, 180); playT.Font = Enum.Font.Gotham; playT.TextSize = 12; playT.TextXAlignment = 0; playT.BackgroundTransparency = 1
+    local yenT = Instance.new('TextLabel', IdentityPanel); yenT.Name = "YT"; yenT.Size = UDim2now(1, -16, 0, 14); yenT.Position = UDim2now(0, 10, 0, 78); yenT.Text = 'Yen: 0'; yenT.TextColor3 = Color3.fromRGB(240, 215, 0); yenT.Font = Enum.Font.Gotham; yenT.TextSize = 12; yenT.TextXAlignment = 0; yenT.BackgroundTransparency = 1
+    local totalYen = Instance.new('TextLabel', IdentityPanel); totalYen.Name = "TY"; totalYen.Size = UDim2now(1, -16, 0, 14); totalYen.Position = UDim2now(0, 10, 0, 96); totalYen.Text = 'Total: 0'; totalYen.TextColor3 = Color3.fromRGB(255, 190, 0); totalYen.Font = Enum.Font.GothamBold; totalYen.TextSize = 12; totalYen.TextXAlignment = 0; totalYen.BackgroundTransparency = 1
+
+    -- Top bar
+    local TopBar = Instance.new('Frame', Main)
+    TopBar.Size = UDim2now(1, -210, 0, 58)
+    TopBar.Position = UDim2now(0, 210, 0, 0)
+    TopBar.BackgroundColor3 = Color3.fromRGB(6, 16, 8); TopBar.BackgroundTransparency = 0.1; TopBar.BorderSizePixel = 0
+
+    local Title = Instance.new('TextLabel', TopBar); Title.Size = UDim2now(0, 300, 1, 0); Title.Position = UDim2now(0, 20, 0, 0); Title.Text = 'BIZARRE LINEAGE'; Title.TextColor3 = Color3.new(1,1,1); Title.Font = Enum.Font.GothamBold; Title.TextSize = 22; Title.BackgroundTransparency = 1; Title.TextXAlignment = 0
+    local SubTitle = Instance.new('TextLabel', TopBar); SubTitle.Size = UDim2now(0, 300, 0, 14); SubTitle.Position = UDim2now(0, 22, 0, 34); SubTitle.Text = 'LITE EXTREME V43'; SubTitle.TextColor3 = Color3.fromRGB(80,160,80); SubTitle.Font = Enum.Font.Gotham; SubTitle.TextSize = 11; SubTitle.BackgroundTransparency = 1; SubTitle.TextXAlignment = 0
+
+    local StatusBox = Instance.new('Frame', TopBar); StatusBox.Size = UDim2now(0, 120, 0, 38); StatusBox.Position = UDim2now(1, -140, 0.5, -19); StatusBox.BackgroundColor3 = Color3.fromRGB(10, 30, 15); StatusBox.BackgroundTransparency = 0.3; Instance.new('UICorner', StatusBox).CornerRadius = UDim.new(0, 6)
+    local fpsL = Instance.new('TextLabel', StatusBox); fpsL.Size = UDim2now(1, 0, 1, 0); fpsL.Text = 'FPS: 0'; fpsL.TextColor3 = AccentColor; fpsL.Font = Enum.Font.GothamBold; fpsL.TextSize = 13; fpsL.BackgroundTransparency = 1
+
+    -- Content area
+    local Content = Instance.new('Frame', Main)
+    Content.Size = UDim2now(1, -230, 1, -68)
+    Content.Position = UDim2now(0, 215, 0, 60)
+    Content.BackgroundTransparency = 1
+
+    -- Map Items side panel (right side, outside Main)
+    local ItemPanel = Instance.new('Frame', SG)
+    ItemPanel.Size = UDim2now(0, 200, 0, 500)
+    ItemPanel.Position = UDim2now(0, 990, 0.5, -250)
+    ItemPanel.BackgroundColor3 = Color3.fromRGB(5, 14, 8); ItemPanel.BackgroundTransparency = 0.08; ItemPanel.BorderSizePixel = 0
+    Instance.new('UICorner', ItemPanel).CornerRadius = UDim.new(0, 8)
+    Instance.new('UIStroke', ItemPanel).Color = AccentColor
+
+    local iT = Instance.new('TextLabel', ItemPanel); iT.Size = UDim2now(1, 0, 0, 30); iT.Position = UDim2now(0,0,0,6); iT.Text = '  MAP ITEMS'; iT.TextColor3 = AccentColor; iT.Font = Enum.Font.GothamBold; iT.TextSize = 14; iT.BackgroundTransparency = 1; iT.TextXAlignment = 0
+
+    -- Search box for Map Items
+    local iSearch = Instance.new('TextBox', ItemPanel); iSearch.Name = 'Search'; iSearch.Size = UDim2now(1, -14, 0, 24); iSearch.Position = UDim2now(0, 7, 0, 36); iSearch.BackgroundColor3 = Color3.fromRGB(8, 20, 10); iSearch.TextColor3 = Color3.new(1,1,1); iSearch.Font = Enum.Font.Gotham; iSearch.TextSize = 12; iSearch.PlaceholderText = 'Search items...'; iSearch.PlaceholderColor3 = Color3.fromRGB(80,120,80); iSearch.Text = ''; iSearch.ClearTextOnFocus = false; iSearch.BorderSizePixel = 0
+    Instance.new('UICorner', iSearch).CornerRadius = UDim.new(0, 4)
+    Instance.new('UIStroke', iSearch).Color = AccentColor
+
+    local iList = Instance.new('ScrollingFrame', ItemPanel); iList.Name = "List"; iList.Size = UDim2now(1, -10, 1, -68); iList.Position = UDim2now(0, 5, 0, 66); iList.BackgroundTransparency = 1; iList.BorderSizePixel = 0; iList.ScrollBarThickness = 2; iList.AutomaticCanvasSize = Enum.AutomaticSize.Y
+    Instance.new("UIListLayout", iList).Padding = UDim.new(0, 2)
+
+    -- Map Items search filter
+    iSearch:GetPropertyChangedSignal('Text'):Connect(function()
+        local q = iSearch.Text:lower()
+        for _, child in ipairs(iList:GetChildren()) do
+            if child:IsA('TextLabel') then
+                child.Visible = (q == '' or child.Text:lower():find(q) ~= nil)
+            end
+        end
+    end)
 
     -- DETAILS POPUP OVERLAY
-    local PopupOverlay = Instance.new("Frame", Main); PopupOverlay.Size = UDim2now(1, -200, 1, 0); PopupOverlay.Position = UDim2now(0, 200, 0, 0); PopupOverlay.BackgroundColor3 = Color3.new(0,0,0); PopupOverlay.BackgroundTransparency = 0; PopupOverlay.ZIndex = 50; PopupOverlay.Visible = false
-    local PopImg = Instance.new("ImageLabel", PopupOverlay); PopImg.Size = UDim2now(0, 300, 0, 300); PopImg.Position = UDim2now(0.5, -150, 0.1, 0); PopImg.BackgroundTransparency = 1; PopImg.ZIndex = 51
-    local PopTitle = Instance.new("TextLabel", PopupOverlay); PopTitle.Size = UDim2now(1, 0, 0, 40); PopTitle.Position = UDim2now(0, 0, 0.2, 310); PopTitle.TextColor3 = Color3.new(1,1,1); PopTitle.Font = Enum.Font.GothamBold; PopTitle.TextSize = 28; PopTitle.BackgroundTransparency = 1; PopTitle.ZIndex = 51
-    local PopDesc = Instance.new("TextLabel", PopupOverlay); PopDesc.Size = UDim2now(0.8, 0, 0, 200); PopDesc.Position = UDim2now(0.1, 0, 0.2, 360); PopDesc.TextColor3 = Color3.new(1,1,1); PopDesc.Font = Enum.Font.Gotham; PopDesc.TextSize = 16; PopDesc.TextWrapped = true; PopDesc.TextYAlignment = Enum.TextYAlignment.Top; PopDesc.BackgroundTransparency = 1; PopDesc.ZIndex = 51
-    local PopBack = Instance.new("TextButton", PopupOverlay); PopBack.Size = UDim2now(0, 150, 0, 40); PopBack.Position = UDim2now(0.5, -75, 0.9, -20); PopBack.BackgroundColor3 = Color3.new(0,0,0); PopBack.TextColor3 = Color3.new(1,1,1); PopBack.Font = Enum.Font.GothamBold; PopBack.TextSize = 14; PopBack.Text = "BACK TO LIST"; PopBack.ZIndex = 51; Instance.new("UIStroke", PopBack).Color = Color3.new(1,1,1); Instance.new("UICorner", PopBack).CornerRadius = UDim.new(0, 4)
+    local PopupOverlay = Instance.new("Frame", Main); PopupOverlay.Size = UDim2now(1, -210, 1, -60); PopupOverlay.Position = UDim2now(0, 215, 0, 60); PopupOverlay.BackgroundColor3 = Color3.fromRGB(5,12,8); PopupOverlay.BackgroundTransparency = 0.05; PopupOverlay.ZIndex = 50; PopupOverlay.Visible = false
+    Instance.new('UICorner', PopupOverlay).CornerRadius = UDim.new(0, 8)
+    local PopImg = Instance.new("ImageLabel", PopupOverlay); PopImg.Size = UDim2now(0, 260, 0, 260); PopImg.Position = UDim2now(0.5, -130, 0, 30); PopImg.BackgroundTransparency = 1; PopImg.ZIndex = 51
+    local PopTitle = Instance.new("TextLabel", PopupOverlay); PopTitle.Size = UDim2now(1, -40, 0, 36); PopTitle.Position = UDim2now(0, 20, 0, 300); PopTitle.TextColor3 = Color3.new(1,1,1); PopTitle.Font = Enum.Font.GothamBold; PopTitle.TextSize = 24; PopTitle.BackgroundTransparency = 1; PopTitle.TextXAlignment = 0; PopTitle.ZIndex = 51
+    local PopDesc = Instance.new("TextLabel", PopupOverlay); PopDesc.Size = UDim2now(1, -40, 0, 160); PopDesc.Position = UDim2now(0, 20, 0, 340); PopDesc.TextColor3 = Color3.fromRGB(200,200,200); PopDesc.Font = Enum.Font.Gotham; PopDesc.TextSize = 14; PopDesc.TextWrapped = true; PopDesc.TextYAlignment = Enum.TextYAlignment.Top; PopDesc.BackgroundTransparency = 1; PopDesc.ZIndex = 51; PopDesc.TextXAlignment = 0
+    local PopBack = Instance.new("TextButton", PopupOverlay); PopBack.Size = UDim2now(0, 140, 0, 38); PopBack.Position = UDim2now(0, 20, 1, -58); PopBack.BackgroundColor3 = Color3.fromRGB(10,30,15); PopBack.TextColor3 = AccentColor; PopBack.Font = Enum.Font.GothamBold; PopBack.TextSize = 13; PopBack.Text = "← BACK"; PopBack.ZIndex = 51; Instance.new("UIStroke", PopBack).Color = AccentColor; Instance.new("UICorner", PopBack).CornerRadius = UDim.new(0, 6)
     PopBack.MouseButton1Click:Connect(function() PopupOverlay.Visible = false end)
 
-    local GuardLabel = Instance.new("TextLabel", SG); GuardLabel.Size = UDim2now(0, 100, 0, 20); GuardLabel.Position = UDim2now(1, -210, 0, 10); GuardLabel.BackgroundTransparency = 1; GuardLabel.TextColor3 = Color3.new(1,1,1); GuardLabel.Font = Enum.Font.GothamBold; GuardLabel.TextSize = 14; GuardLabel.Text = "ENGINE: [LOCK]"; GuardLabel.TextXAlignment = Enum.TextXAlignment.Right; GuardLabel.Visible = true; GuardLabel.ZIndex = 100
+    -- ENGINE Guard label
+    local GuardLabel = Instance.new("TextLabel", SG); GuardLabel.Size = UDim2now(0, 140, 0, 22); GuardLabel.Position = UDim2now(1, -155, 0, 8); GuardLabel.BackgroundTransparency = 1; GuardLabel.TextColor3 = Color3.new(1,1,1); GuardLabel.Font = Enum.Font.GothamBold; GuardLabel.TextSize = 13; GuardLabel.Text = "ENGINE: [LOCK]"; GuardLabel.TextXAlignment = Enum.TextXAlignment.Right; GuardLabel.Visible = true; GuardLabel.ZIndex = 100
     local GuardStroke = Instance.new("UIStroke", GuardLabel); GuardStroke.Color = Color3.new(0,0,0); GuardStroke.Thickness = 2
+    local GuardZone = Instance.new("Frame", SG); GuardZone.Size = UDim2now(0, 220, 0, 60); GuardZone.BackgroundColor3 = Color3.new(0.3, 0.3, 0.3); GuardZone.BackgroundTransparency = 0.92; GuardZone.BorderSizePixel = 0; GuardZone.Visible = false; GuardZone.ZIndex = 0
 
-    local GuardZone = Instance.new("Frame", SG); GuardZone.Size = UDim2now(0, 250, 0, 80); GuardZone.BackgroundColor3 = Color3.new(0.4, 0.4, 0.4); GuardZone.BackgroundTransparency = 0.92; GuardZone.BorderSizePixel = 0; GuardZone.Visible = false; GuardZone.ZIndex = 0
-    local GZStroke = Instance.new("UIStroke", GuardZone); GZStroke.Color = Color3.new(0.4, 0.4, 0.4); GZStroke.Thickness = 1; GZStroke.Transparency = 0.8
+    -- Boss HP Bar (custom, always-on-top UI element)
+    local BossBar = Instance.new('Frame', SG); BossBar.Name = 'BossHPBar'; BossBar.Size = UDim2now(0, 500, 0, 52); BossBar.Position = UDim2now(0.5, -250, 0, 8); BossBar.BackgroundColor3 = Color3.fromRGB(8, 20, 12); BossBar.BackgroundTransparency = 0.15; BossBar.Visible = false; BossBar.ZIndex = 200; BossBar.BorderSizePixel = 0
+    Instance.new('UICorner', BossBar).CornerRadius = UDim.new(0, 8)
+    Instance.new('UIStroke', BossBar).Color = Color3.fromRGB(200, 60, 60)
+    local BBName = Instance.new('TextLabel', BossBar); BBName.Size = UDim2now(1, -20, 0, 18); BBName.Position = UDim2now(0, 10, 0, 4); BBName.Text = 'Boss Name'; BBName.TextColor3 = Color3.new(1,1,1); BBName.Font = Enum.Font.GothamBold; BBName.TextSize = 13; BBName.TextXAlignment = 0; BBName.BackgroundTransparency = 1; BBName.ZIndex = 201
+    local BBBg = Instance.new('Frame', BossBar); BBBg.Size = UDim2now(1, -20, 0, 16); BBBg.Position = UDim2now(0, 10, 0, 26); BBBg.BackgroundColor3 = Color3.fromRGB(30, 15, 15); BBBg.BorderSizePixel = 0; BBBg.ZIndex = 201; Instance.new('UICorner', BBBg).CornerRadius = UDim.new(1, 0)
+    local BBFill = Instance.new('Frame', BBBg); BBFill.Name = 'Fill'; BBFill.Size = UDim2now(1, 0, 1, 0); BBFill.BackgroundColor3 = Color3.fromRGB(200, 50, 50); BBFill.BorderSizePixel = 0; BBFill.ZIndex = 202; Instance.new('UICorner', BBFill).CornerRadius = UDim.new(1, 0)
+    local BBText = Instance.new('TextLabel', BBBg); BBText.Name = 'HPText'; BBText.Size = UDim2now(1, 0, 1, 0); BBText.Text = '0/0'; BBText.TextColor3 = Color3.new(1,1,1); BBText.Font = Enum.Font.GothamBold; BBText.TextSize = 11; BBText.BackgroundTransparency = 1; BBText.ZIndex = 203
 
-    self.Elements = {Main=Main, Sidebar=Sidebar, Content=Content, FPS=fpsL, ItemList=iList, ItemPanel=ItemPanel, Popup=PopupOverlay, PopImg=PopImg, PopTitle=PopTitle, PopDesc=PopDesc, PT=playT, YT=yenT, TY=totalYen, Guard=GuardLabel, GuardZone=GuardZone}
+    -- Play Again notification banner
+    local PlayAgainBanner = Instance.new('Frame', SG); PlayAgainBanner.Name = 'PlayAgainBanner'; PlayAgainBanner.Size = UDim2now(0, 340, 0, 44); PlayAgainBanner.Position = UDim2now(0.5, -170, 1, -60); PlayAgainBanner.BackgroundColor3 = Color3.fromRGB(0, 60, 20); PlayAgainBanner.BackgroundTransparency = 0.2; PlayAgainBanner.Visible = false; PlayAgainBanner.ZIndex = 200; PlayAgainBanner.BorderSizePixel = 0
+    Instance.new('UICorner', PlayAgainBanner).CornerRadius = UDim.new(0, 8)
+    Instance.new('UIStroke', PlayAgainBanner).Color = AccentColor
+    local PALabel = Instance.new('TextLabel', PlayAgainBanner); PALabel.Size = UDim2now(1, 0, 1, 0); PALabel.Text = '✔ RAID COMPLETE – Clicking Play Again...'; PALabel.TextColor3 = AccentColor; PALabel.Font = Enum.Font.GothamBold; PALabel.TextSize = 13; PALabel.BackgroundTransparency = 1; PALabel.ZIndex = 201
+
+    self.Elements = {Main=Main, Sidebar=Sidebar, Content=Content, FPS=fpsL, ItemList=iList, ItemPanel=ItemPanel, Popup=PopupOverlay, PopImg=PopImg, PopTitle=PopTitle, PopDesc=PopDesc, PT=playT, YT=yenT, TY=totalYen, Guard=GuardLabel, GuardZone=GuardZone, BossBar=BossBar, BBName=BBName, BBFill=BBFill, BBText=BBText, PlayAgainBanner=PlayAgainBanner}
     ItemPanel.Visible = Settings.ShowMapItems
 end
 
 function UI_Master:AddTab(name, index, icon)
-    local b = Instance.new('TextButton', self.Elements.Sidebar); b.Size = UDim2now(1, -20, 0, 46); b.Position = UDim2now(0, 10, 0, 90 + (index-1)*54); b.BackgroundColor3 = Color3.fromRGB(15, 30, 20); b.BackgroundTransparency = 0.5; b.Text = '   ' .. name; b.TextColor3 = Color3.fromRGB(180, 220, 180); b.Font = Enum.Font.GothamBold; b.TextSize = 14; b.TextXAlignment = 0; b.AutoButtonColor = false; Instance.new('UICorner', b)
-    local im = Instance.new('ImageLabel', b); im.Size = UDim2now(0, 18, 0, 18); im.Position = UDim2now(0, 12, 0.5, -9); im.Image = icon or 'rbxassetid://6031230111'; im.BackgroundTransparency = 1; im.ImageColor3 = Color3.fromRGB(180, 220, 180)
+    -- Tabs now go into the scrollable TabScroll container, layout is handled by UIListLayout
+    local b = Instance.new('TextButton', self.TabScroll)
+    b.Size = UDim2now(1, 0, 0, 38)
+    b.BackgroundColor3 = Color3.fromRGB(12, 28, 16); b.BackgroundTransparency = 0.4; b.Text = '  ' .. name; b.TextColor3 = Color3.fromRGB(160, 210, 160); b.Font = Enum.Font.GothamBold; b.TextSize = 13; b.TextXAlignment = 0; b.AutoButtonColor = false; b.BorderSizePixel = 0
+    Instance.new('UICorner', b).CornerRadius = UDim.new(0, 6)
+    local im = Instance.new('ImageLabel', b); im.Size = UDim2now(0, 16, 0, 16); im.Position = UDim2now(1, -28, 0.5, -8); im.Image = icon or 'rbxassetid://6031230111'; im.BackgroundTransparency = 1; im.ImageColor3 = Color3.fromRGB(160, 210, 160)
     self.Buttons[name] = b; b.MouseButton1Click:Connect(function() self:Switch(name) end)
-    local p = Instance.new('ScrollingFrame', self.Elements.Content); p.Size = UDim2now(1, 0, 1, 0); p.BackgroundTransparency = 1; p.Visible = false; p.ScrollBarThickness = 0; p.AutomaticCanvasSize = Enum.AutomaticSize.Y; local llo = Instance.new('UIListLayout', p); llo.Padding = UDim.new(0, 8); llo.SortOrder = Enum.SortOrder.LayoutOrder; self.Pages[name] = p
+
+    local p = Instance.new('ScrollingFrame', self.Elements.Content)
+    p.Size = UDim2now(1, 0, 1, 0); p.BackgroundTransparency = 1; p.Visible = false; p.ScrollBarThickness = 3; p.ScrollBarImageColor3 = AccentColor; p.AutomaticCanvasSize = Enum.AutomaticSize.Y; p.BorderSizePixel = 0
+    local llo = Instance.new('UIListLayout', p); llo.Padding = UDim.new(0, 6); llo.SortOrder = Enum.SortOrder.LayoutOrder
+    local ppad = Instance.new('UIPadding', p); ppad.PaddingLeft = UDim.new(0, 4); ppad.PaddingRight = UDim.new(0, 4); ppad.PaddingTop = UDim.new(0, 6)
+    self.Pages[name] = p
 end
 
 function UI_Master:Switch(name)
@@ -412,6 +504,7 @@ UI_Master:AddSlider(pgR, "Raid Retry Delay", "RaidDelay", 0, 5, "s")
 local pgTools = UI_Master.Pages.Tools
 UI_Master:AddToggle(pgTools, "Auto Dialog (Skip NPCs)", "AutoDialog")
 UI_Master:AddToggle(pgTools, "Stealth Mode", "StealthMode", "Makes your character transparent locally")
+UI_Master:AddToggle(pgTools, "Auto Stand (Tab Summon)", "AutoStand", "Automatically presses Tab to summon Stand if missing")
 
 local shBtn = Instance.new("TextButton", pgTools); shBtn.Size = UDim2now(1, -10, 0, 40); shBtn.BackgroundColor3 = SecondaryGreen; shBtn.Text = "SERVER HOP (Random)"; shBtn.TextColor3 = Color3now(255,255,255); shBtn.Font = Enum.Font.GothamBold; shBtn.TextSize = 14; Instance.new("UICorner", shBtn)
 shBtn.MouseButton1Click:Connect(function() 
@@ -796,6 +889,25 @@ RS.Heartbeat:Connect(function()
             data.UI.TextColor3 = color; data.UI.Visible = true
         elseif data.UI then data.UI.Visible = false end
     end
+    
+    -- Boss HP Bar update
+    local bb = UI_Master.Elements
+    if bb.BossBar then
+        local target = State.CurrentFarmTarget
+        if target and target.Obj and target.IsBoss then
+            local th = target.Obj:FindFirstChildOfClass("Humanoid")
+            if th and th.MaxHealth > 0 then
+                local pct = math.clamp(th.Health / th.MaxHealth, 0, 1)
+                bb.BossBar.Visible = true
+                bb.BBName.Text = target.Name .. "  |  Lv" .. (target.Obj:FindFirstChild("Level") and target.Obj.Level.Value or "?")
+                bb.BBFill.Size = UDim2now(pct, 0, 1, 0)
+                bb.BBFill.BackgroundColor3 = (pct > 0.5 and Color3.fromRGB(200, 50, 50) or (pct > 0.2 and Color3.fromRGB(220, 120, 20) or Color3.fromRGB(255, 255, 50)))
+                bb.BBText.Text = math_floor(th.Health) .. " / " .. math_floor(th.MaxHealth)
+            end
+        else
+            if bb.BossBar.Visible then bb.BossBar.Visible = false end
+        end
+    end
 end)
 
 task.spawn(function()
@@ -826,20 +938,48 @@ task.spawn(function()
         else State.CurrentFarmTarget = nil end
         
         if Settings.AutoItemFarm and Settings.EngineActive then
-            local closest, minDist = nil, 400
+            local closestItem, minItemDist = nil, 400
             for _, item in ipairs(DetectedItems) do
                 if item.IsItem then
                     local d = (hrp.Position - item.Part.Position).Magnitude
-                    if d < minDist then minDist = d; closest = item end
+                    if d < minItemDist then minItemDist = d; closestItem = item end
                 end
             end
-            if closest then
+            if closestItem then
                 pcall(function()
-                    hrp.CFrame = closest.Part.CFrame; task.wait(0.3)
-                    local old = closest.Obj.HoldDuration; closest.Obj.HoldDuration = 0
-                    fireproximityprompt(closest.Obj); closest.Obj.HoldDuration = old; task.wait(0.5)
+                    -- Teleport slightly above the item to avoid getting stuck inside geometry
+                    local targetCF = closestItem.Part.CFrame + Vector3.new(0, 3, 0)
+                    hrp.CFrame = targetCF
+                    task.wait(0.2)
+                    -- Try to fire the proximity prompt, temporarily disabling hold requirement
+                    local prompt = closestItem.Obj
+                    if prompt and prompt:IsA('ProximityPrompt') then
+                        local oldHold = prompt.HoldDuration
+                        prompt.HoldDuration = 0
+                        fireproximityprompt(prompt)
+                        task.wait(0.3)
+                        pcall(function() prompt.HoldDuration = oldHold end)
+                    end
                 end)
             end
+        end
+        
+        -- Auto Stand: summon stand via Tab key if not present
+        if Settings.AutoStand and Settings.EngineActive then
+            pcall(function()
+                local standName = Client.Name .. "'s Stand"
+                local hasStand = workspace:FindFirstChild(standName, true) ~= nil
+                if not hasStand and Client.Character then
+                    -- Check directly parented to character as well
+                    hasStand = Client.Character:FindFirstChild("Stand", true) ~= nil
+                end
+                if not hasStand then
+                    VIM:SendKeyEvent(true, Enum.KeyCode.Tab, false, game)
+                    task.wait(0.05)
+                    VIM:SendKeyEvent(false, Enum.KeyCode.Tab, false, game)
+                end
+            end)
+            task.wait(1.5) -- only check every ~2s to avoid spamming Tab
         end
     end
 end)
@@ -872,25 +1012,52 @@ end)
 task.spawn(function() while true do pcall(UnifiedScan); task.wait(Settings.ScanInterval or 1.5) end end)
 
 task.spawn(function()
+    -- HIGH-SPEED CLICKER: runs nearly every frame, boss-death aware
+    local lastBossAlive = true
     while true do
-        if Settings.AutoFarm then Settings.AutoM1 = true end
+        task.wait(0) -- immediate next frame yield (maximum speed)
         local isTyping = UIS:GetFocusedTextBox() ~= nil
         local isPaused = not Settings.EngineActive
-        local mousePos = UIS:GetMouseLocation()
-        local inGuardZone = mousePos.X < 250 and mousePos.Y < 80
         
-        if (Settings.AutoM1 or Settings.AutoFarm) and not (isTyping or isPaused or inGuardZone) then
+        -- Boss death check: stop clicking if current target is dead
+        local bossAlive = true
+        if State.CurrentFarmTarget then
+            local th = State.CurrentFarmTarget.Obj and State.CurrentFarmTarget.Obj:FindFirstChild("Humanoid")
+            if not th or th.Health <= 0 then
+                bossAlive = false
+            end
+        end
+        
+        -- Show/hide Play Again banner
+        if UI_Master.Elements.PlayAgainBanner then
+            UI_Master.Elements.PlayAgainBanner.Visible = (not bossAlive and State.CurrentFarmTarget ~= nil)
+        end
+        
+        if (Settings.AutoM1 or Settings.AutoFarm) and not isTyping and not isPaused and bossAlive then
             pcall(function()
-                VIM:SendMouseButtonEvent(0, 0, 0, true, game, 0); task.wait(Settings.ClickSpeed or 0.015); VIM:SendMouseButtonEvent(0, 0, 0, false, game, 0)
-                local skills = {{Key = Enum.KeyCode.E, Active = Settings.AutoSkillE},{Key = Enum.KeyCode.R, Active = Settings.AutoSkillR},{Key = Enum.KeyCode.Z, Active = Settings.AutoSkillZ},{Key = Enum.KeyCode.X, Active = Settings.AutoSkillX},{Key = Enum.KeyCode.C, Active = Settings.AutoSkillC},{Key = Enum.KeyCode.V, Active = Settings.AutoSkillV}}
+                VIM:SendMouseButtonEvent(0, 0, 0, true, game, 0)
+                task.wait(Settings.ClickSpeed or 0.005)
+                VIM:SendMouseButtonEvent(0, 0, 0, false, game, 0)
+                -- Fire auto skills in the same tick
+                local skills = {
+                    {Key=Enum.KeyCode.E, Active=Settings.AutoSkillE},
+                    {Key=Enum.KeyCode.R, Active=Settings.AutoSkillR},
+                    {Key=Enum.KeyCode.Z, Active=Settings.AutoSkillZ},
+                    {Key=Enum.KeyCode.X, Active=Settings.AutoSkillX},
+                    {Key=Enum.KeyCode.C, Active=Settings.AutoSkillC},
+                    {Key=Enum.KeyCode.V, Active=Settings.AutoSkillV}
+                }
                 for _, skill in ipairs(skills) do
                     if skill.Active then
-                        VIM:SendKeyEvent(true, skill.Key, false, game); task.wait(0.01); VIM:SendKeyEvent(false, skill.Key, false, game)
+                        VIM:SendKeyEvent(true, skill.Key, false, game)
+                        task.wait(0.008)
+                        VIM:SendKeyEvent(false, skill.Key, false, game)
                     end
                 end
             end)
-            task.wait(Settings.MacroInterval or 0.02)
-        else task.wait(0.05) end
+        else
+            task.wait(0.01) -- brief pause when idle to prevent 100% CPU usage
+        end
     end
 end)
 
