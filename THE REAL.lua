@@ -1,8 +1,10 @@
 --[[ BIZARRE LINEAGE LITE INTERNAL V43 | REFACTORED UPDATE | REGISTER SAFE | SOLID 0 ]]
 if not game:IsLoaded() then game.Loaded:Wait() end
 local getgenv = getgenv or function() return _G end
-if getgenv().LiteExtremeLoaded then return end
+local SG_NAME = 'BizarreLiteExtreme_V43'
+if game:GetService('CoreGui'):FindFirstChild(SG_NAME) then game:GetService('CoreGui')[SG_NAME]:Destroy() end
 getgenv().LiteExtremeLoaded = true
+
 
 local Players = game:GetService('Players')
 local Http = game:GetService('HttpService')
@@ -24,6 +26,11 @@ local math_floor, math_clamp, math_rad = math.floor, math.clamp, math.rad
 local bc = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
 local function base64_encode(data) return ((data:gsub('.', function(x) local r,b='',x:byte() for i=8,1,-1 do r=r..(b%2^i-b%2^(i-1)>0 and '1' or '0') end return r; end)..'0000'):gsub('%d%d%d?%d?%d?%d?', function(x) if (#x < 6) then return '' end local c=0 for i=1,6 do c=c+(x:sub(i,i)=='1' and 2^(6-i) or 0) end return bc:sub(c+1,c+1) end)..({ '', '==', '=' })[#data%3+1]) end
 local function base64_decode(data) data = string.gsub(data, '[^'..bc..'=]', '') return (data:gsub('.', function(x) if (x == '=') then return '' end local r,f='',bc:find(x)-1 for i=6,1,-1 do r=r..(f%2^i-f%2^(i-1)>0 and '1' or '0') end return r; end):gsub('%d%d%d?%d?%d?%d?%d?%d?', function(x) if (#x < 8) then return '' end local c=0 for i=1,8 do c=c+(x:sub(i,i)=='1' and 2^(8-i) or 0) end return string.char(c) end)) end
+local function setClipboard(txt)
+    local func = setclipboard or toclipboard or set_clipboard or (Clipboard and Clipboard.set)
+    if func then pcall(function() func(txt) end) end
+end
+
 
 local State = {
     TrueInstinct = false,
@@ -137,13 +144,17 @@ function UI_Master:Init()
 
     local Branding = Instance.new('Frame', Sidebar); Branding.Size = UDim2now(1, 0, 0, 72); Branding.BackgroundTransparency = 1
     local BrandTitle = Instance.new('TextLabel', Branding); BrandTitle.Size = UDim2now(1, -20, 0, 28); BrandTitle.Position = UDim2now(0, 10, 0, 10); BrandTitle.Text = 'THE REAL'; BrandTitle.TextColor3 = AccentColor; BrandTitle.Font = Enum.Font.GothamBold; BrandTitle.TextSize = 22; BrandTitle.TextXAlignment = 0; BrandTitle.BackgroundTransparency = 1
-    local BrandLink = Instance.new('TextButton', Branding); BrandLink.Size = UDim2now(1, -20, 0, 14); BrandLink.Position = UDim2now(0, 10, 0, 40); BrandLink.Text = 'https://discord.gg/6AE5zUQB'; BrandLink.TextColor3 = Color3.fromRGB(120, 200, 120); BrandLink.Format = Enum.Font.Gotham; BrandLink.TextSize = 10; BrandLink.TextXAlignment = 0; BrandLink.BackgroundTransparency = 1; BrandLink.Font = Enum.Font.Gotham; BrandLink.TextWrapped = true
+    local BrandLink = Instance.new('TextButton', Branding); BrandLink.Size = UDim2now(1, -20, 0, 18); BrandLink.Position = UDim2now(0, 10, 0, 40); BrandLink.Text = 'discord.gg/6AE5zUQB'; BrandLink.TextColor3 = Color3.fromRGB(150, 255, 150); BrandLink.Font = Enum.Font.GothamBold; BrandLink.TextSize = 11; BrandLink.TextXAlignment = 0; BrandLink.BackgroundTransparency = 0.8; BrandLink.BackgroundColor3 = Color3.fromRGB(20, 40, 20); BrandLink.TextWrapped = true
+    Instance.new("UICorner", BrandLink).CornerRadius = UDim.new(0, 4)
+    Instance.new("UIStroke", BrandLink).Color = Color3.fromRGB(40, 80, 40)
 
     BrandLink.MouseButton1Click:Connect(function()
-        setclipboard('https://discord.gg/6AE5zUQB')
-        BrandLink.Text = "COPIED TO CLIPBOARD!"
-        task.wait(2)
-        BrandLink.Text = 'https://discord.gg/6AE5zUQB'
+        setClipboard('https://discord.gg/6AE5zUQB')
+        BrandLink.Text = "COPIED!"
+        BrandLink.TextColor3 = Color3.new(1,1,1)
+        task.wait(1.5)
+        BrandLink.Text = 'discord.gg/6AE5zUQB'
+        BrandLink.TextColor3 = Color3.fromRGB(150, 255, 150)
     end)
 
     -- Tab scroll container (so tabs never get cut off)
@@ -424,6 +435,7 @@ UI_Master:Init()
 local Tabs = {'Dashboard', 'Combat', 'Skills', 'ESP', 'Farming', 'Raid', 'Tools', 'Teleport', 'Misc', 'Wiki', 'Settings'}
 for i, t in ipairs(Tabs) do UI_Master:AddTab(t, i) end
 UI_Master:Switch('Dashboard')
+CreateConsole()
 
 -- COMMAND CONSOLE
 local function CreateConsole()
