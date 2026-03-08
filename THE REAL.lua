@@ -34,14 +34,14 @@ local Settings = {
     NPC_ESP=true, Boss_ESP=true, Player_ESP=true, Item_ESP=true,
     NPC_ESPColor=Color3now(255,230,0), Boss_ESPColor=Color3now(255,60,60),
     Player_ESPColor=Color3now(0,255,100), Item_ESPColor=Color3now(150,255,120),
-    ItemESPRange=1000, AutoItemFarm=false, ShowMapItems=false,
+    ItemESPRange=1000, AutoItemFarm=false, ShowMapItems=false, ShowItemPanel=true,
     FarmAngle='Below (Default)', FarmDist=7, FarmOnlyBoss=true,
     AutoM1=false, AutoSkillE=false, AutoSkillR=false, AutoSkillZ=false, AutoSkillX=false, AutoSkillC=false, AutoSkillV=false,
     AutoRaid=false, RaidAutoEnter=true, RaidAutoRetry=true, RaidDelay=0.5,
     WalkSpeed=16, JumpPower=50, UITransparency=0, ConfigName='LiteExtreme_V43', FarmTargetName='',
     AutoRoka=false, EngineActive=true, AdvancedScan=false, ScanInterval=1.5,
     AutoPlayAgain=true, ClickSpeed=0.015, MacroInterval=0.02, AutoRejoin=true,
-    AutoDialog=true, StealthMode=false, AntiAFK=true, AutoStand=false
+    AutoDialog=true, StealthMode=false, AntiAFK=true, AutoStand=false, VisualizerActive=false
 }
 
 local function LoadConfig()
@@ -70,20 +70,47 @@ local SecondaryGreen = Color3now(20, 60, 30)
 local DarkBg = Color3now(5, 12, 8)
 
 local WikiData = {
-    {Name='TIME STOP DOMINATOR', Stand='The World', SubAbility='Hamon', Style='Boxing', Desc='High DPS build for time stops.', Img='rbxassetid://13110298083'},
-    {Name='SPEED DEMON', Stand='Made In Heaven', SubAbility='Cyborg', Style='Karate', Desc='Hit-and-run battle style.', Img='rbxassetid://13110298083'},
-    {Name='VAMPIRE TANK', Stand='Stone Free', SubAbility='Vampire', Style='Kendo', Desc='High survivability.', Img='rbxassetid://13110298083'},
-    {Name='RANGED POKER', Stand='Weather Report', SubAbility='Spin', Style='Kendo', Desc='Area control build.', Img='rbxassetid://13110298083'},
-    {Name='Common Chest', Stand='-ITEM-', SubAbility='-', Style='-', Desc='Low level materials.', Img='rbxassetid://13110298083'},
-    {Name='Rare Chest', Stand='-ITEM-', SubAbility='-', Style='-', Desc='Reliable Yen source.', Img='rbxassetid://13110298083'},
-    {Name='Legendary Chest', Stand='-ITEM-', SubAbility='-', Style='-', Desc='Guaranteed rare items.', Img='rbxassetid://13110298083'},
-    {Name='Stat Reset Essence', Stand='-ESSENCE-', SubAbility='-', Style='-', Desc='Resets stat points.', Img='rbxassetid://7335967073'},
-    {Name='Personality Reroll', Stand='-ESSENCE-', SubAbility='-', Style='-', Desc='Rerolls stand personality.', Img='rbxassetid://7335967073'},
-    {Name='Vampire Mask', Stand='-ITEM-', SubAbility='-', Style='-', Desc='Become a vampire.', Img='rbxassetid://13110298083'},
-    {Name='Stand Arrow', Stand='-ITEM-', SubAbility='-', Style='-', Desc='Awaken a Stand.', Img='rbxassetid://13110298083'},
-    {Name='Lucky Arrow', Stand='-ITEM-', SubAbility='-', Style='-', Desc='Guarantees a Skin.', Img='rbxassetid://13110298083'},
-    {Name='Rokakaka Fruit', Stand='-ITEM-', SubAbility='-', Style='-', Desc='Resets Stand.', Img='rbxassetid://13110298083'},
-    {Name='Red Stone of Aja', Stand='-ITEM-', SubAbility='-', Style='-', Desc='Evolve abilities.', Img='rbxassetid://13110298083'}
+    {Name='Stand Arrow', Stand='-ITEM-', SubAbility='-', Style='-', Desc='Gains access to a Stand.', Img='rbxassetid://13110298083'},
+    {Name='Stone Mask', Stand='-ITEM-', SubAbility='Vampire', Style='-', Desc='Gives the Vampire Sub Ability.', Img='rbxassetid://13110298083'},
+    {Name='Luky Arrow', Stand='-ITEM-', SubAbility='-', Style='-', Desc='Guarantees a random Skin for a Stand.', Img='rbxassetid://13110298083'},
+    {Name='Common Chest', Stand='-ITEM-', SubAbility='-', Style='-', Desc='Gives various items.', Img='rbxassetid://13110298083'},
+    {Name='Rare Chest', Stand='-ITEM-', SubAbility='-', Style='-', Desc='Gives various rare items.', Img='rbxassetid://13110298083'},
+    {Name='Legendary Chest', Stand='-ITEM-', SubAbility='-', Style='-', Desc='Gives various legendary items.', Img='rbxassetid://13110298083'},
+    {Name='Dio\'s Diary', Stand='-ITEM-', SubAbility='-', Style='-', Desc='Quest item for Pucci\'s quest.', Img='rbxassetid://13110298083'},
+    {Name='Red Stone of Aja', Stand='-ITEM-', SubAbility='-', Style='-', Desc='Doubles Legendary Skin chance, 2x Conjuration, +1% Lucky Arrow spawn.', Img='rbxassetid://13110298083'},
+    {Name='Fabric', Stand='-CRAFT-', SubAbility='-', Style='-', Desc='Crafting material.', Img='rbxassetid://13110298083'},
+    {Name='Bronze Fragments', Stand='-CRAFT-', SubAbility='-', Style='-', Desc='Crafting material.', Img='rbxassetid://13110298083'},
+    {Name='Acid', Stand='-CRAFT-', SubAbility='-', Style='-', Desc='Crafting material.', Img='rbxassetid://13110298083'},
+    {Name='Leather', Stand='-CRAFT-', SubAbility='-', Style='-', Desc='Crafting material.', Img='rbxassetid://13110298083'},
+    {Name='Maigot Recipe', Stand='-ITEM-', SubAbility='-', Style='-', Desc='Tonio Trussardi Quest item.', Img='rbxassetid://13110298083'},
+    {Name='Sapphire', Stand='-CRAFT-', SubAbility='-', Style='-', Desc='Crafting material.', Img='rbxassetid://13110298083'},
+    {Name='Ruby', Stand='-CRAFT-', SubAbility='-', Style='-', Desc='Crafting material.', Img='rbxassetid://13110298083'},
+    {Name='Bones', Stand='-CRAFT-', SubAbility='-', Style='-', Desc='Crafting material.', Img='rbxassetid://13110298083'},
+    {Name='Opal', Stand='-CRAFT-', SubAbility='-', Style='-', Desc='Crafting material.', Img='rbxassetid://13110298083'},
+    {Name='Silver Fragments', Stand='-CRAFT-', SubAbility='-', Style='-', Desc='Crafting material.', Img='rbxassetid://13110298083'},
+    {Name='Gold Fragments', Stand='-CRAFT-', SubAbility='-', Style='-', Desc='Crafting material.', Img='rbxassetid://13110298083'},
+    {Name='Gold Coins', Stand='-CRAFT-', SubAbility='-', Style='-', Desc='Crafting material.', Img='rbxassetid://13110298083'},
+    {Name='Burner Phone', Stand='-QUEST-', SubAbility='-', Style='-', Desc='NPC Questline item.', Img='rbxassetid://13110298083'},
+    {Name='Manga Manuscripts', Stand='-CRAFT-', SubAbility='-', Style='-', Desc='Crafting material.', Img='rbxassetid://13110298083'},
+    {Name='Lost Spirit', Stand='-CRAFT-', SubAbility='-', Style='-', Desc='Crafting material.', Img='rbxassetid://13110298083'},
+    {Name='Vampire Fang', Stand='-CRAFT-', SubAbility='-', Style='-', Desc='Crafting material.', Img='rbxassetid://13110298083'},
+    {Name='DIO\'s Bone', Stand='-CRAFT-', SubAbility='-', Style='-', Desc='Crafting material.', Img='rbxassetid://13110298083'},
+    {Name='Cosmic Radiation', Stand='-CRAFT-', SubAbility='-', Style='-', Desc='Crafting material.', Img='rbxassetid://13110298083'},
+    {Name='Meteor Fragments', Stand='-CRAFT-', SubAbility='-', Style='-', Desc='Crafting material.', Img='rbxassetid://13110298083'},
+    {Name='Imperfect Aja', Stand='-CRAFT-', SubAbility='-', Style='-', Desc='Crafting material.', Img='rbxassetid://13110298083'},
+    {Name='Stop Sign', Stand='-WEAPON-', SubAbility='-', Style='-', Desc='Weapon.', Img='rbxassetid://13110298083'},
+    {Name='Shadow Axe', Stand='-WEAPON-', SubAbility='-', Style='-', Desc='Weapon.', Img='rbxassetid://13110298083'},
+    {Name='Odachi', Stand='-WEAPON-', SubAbility='-', Style='-', Desc='Weapon.', Img='rbxassetid://13110298083'},
+    {Name='Katana', Stand='-WEAPON-', SubAbility='-', Style='-', Desc='Weapon.', Img='rbxassetid://13110298083'},
+    {Name='Hammer', Stand='-WEAPON-', SubAbility='-', Style='-', Desc='Weapon.', Img='rbxassetid://13110298083'},
+    {Name='Shovel', Stand='-WEAPON-', SubAbility='-', Style='-', Desc='Weapon.', Img='rbxassetid://13110298083'},
+    {Name='Luck & Pluck', Stand='-WEAPON-', SubAbility='-', Style='-', Desc='Weapon.', Img='rbxassetid://13110298083'},
+    {Name='Stat Point Essence', Stand='-ESSENCE-', SubAbility='-', Style='-', Desc='Resets Stat Points.', Img='rbxassetid://7335967073'},
+    {Name='Stand Skin Essence', Stand='-ESSENCE-', SubAbility='-', Style='-', Desc='Gives Stand a skin.', Img='rbxassetid://7335967073'},
+    {Name='Stand Stat Essence', Stand='-ESSENCE-', SubAbility='-', Style='-', Desc='Rerolls Stand stat grades.', Img='rbxassetid://7335967073'},
+    {Name='Stand Personality Essence', Stand='-ESSENCE-', SubAbility='-', Style='-', Desc='Rerolls Stand personality.', Img='rbxassetid://7335967073'},
+    {Name='Stand Conjuration Essence', Stand='-ESSENCE-', SubAbility='-', Style='-', Desc='Maxes out Stand Conjuration.', Img='rbxassetid://7335967073'},
+    {Name='Custom Clothing Essence', Stand='-ESSENCE-', SubAbility='-', Style='-', Desc='Use Roblox avatar appearance.', Img='rbxassetid://7335967073'}
 }
 
 local UI_Master = {Pages = {}, Buttons = {}, Elements = {}}
@@ -147,36 +174,37 @@ function UI_Master:Init()
     local StatusBox = Instance.new('Frame', TopBar); StatusBox.Size = UDim2now(0, 120, 0, 38); StatusBox.Position = UDim2now(1, -140, 0.5, -19); StatusBox.BackgroundColor3 = Color3.fromRGB(10, 30, 15); StatusBox.BackgroundTransparency = 0.3; Instance.new('UICorner', StatusBox).CornerRadius = UDim.new(0, 6)
     local fpsL = Instance.new('TextLabel', StatusBox); fpsL.Size = UDim2now(1, 0, 1, 0); fpsL.Text = 'FPS: 0'; fpsL.TextColor3 = AccentColor; fpsL.Font = Enum.Font.GothamBold; fpsL.TextSize = 13; fpsL.BackgroundTransparency = 1
 
-    -- Content area
+    -- Content area (adjusted for right-docked panel)
     local Content = Instance.new('Frame', Main)
-    Content.Size = UDim2now(1, -230, 1, -68)
+    Content.Size = UDim2now(1, -440, 1, -68)
     Content.Position = UDim2now(0, 215, 0, 60)
     Content.BackgroundTransparency = 1
 
-    -- Map Items side panel (right side, outside Main)
-    local ItemPanel = Instance.new('Frame', SG)
-    ItemPanel.Size = UDim2now(0, 200, 0, 500)
-    ItemPanel.Position = UDim2now(0, 990, 0.5, -250)
-    ItemPanel.BackgroundColor3 = Color3.fromRGB(5, 14, 8); ItemPanel.BackgroundTransparency = 0.08; ItemPanel.BorderSizePixel = 0
+    -- Map Items side panel (DOCKER INSIDE MAIN)
+    local ItemPanel = Instance.new('Frame', Main)
+    ItemPanel.Name = "ItemPanel"
+    ItemPanel.Size = UDim2now(0, 210, 1, -68)
+    ItemPanel.Position = UDim2now(1, -215, 0, 60)
+    ItemPanel.BackgroundColor3 = Color3.fromRGB(5, 14, 8); ItemPanel.BackgroundTransparency = 0.15; ItemPanel.BorderSizePixel = 0
     Instance.new('UICorner', ItemPanel).CornerRadius = UDim.new(0, 8)
-    Instance.new('UIStroke', ItemPanel).Color = AccentColor
+    Instance.new('UIStroke', ItemPanel).Color = Color3.fromRGB(20, 60, 30)
 
     local iT = Instance.new('TextLabel', ItemPanel); iT.Size = UDim2now(1, 0, 0, 30); iT.Position = UDim2now(0,0,0,6); iT.Text = '  MAP ITEMS'; iT.TextColor3 = AccentColor; iT.Font = Enum.Font.GothamBold; iT.TextSize = 14; iT.BackgroundTransparency = 1; iT.TextXAlignment = 0
 
     -- Search box for Map Items
-    local iSearch = Instance.new('TextBox', ItemPanel); iSearch.Name = 'Search'; iSearch.Size = UDim2now(1, -14, 0, 24); iSearch.Position = UDim2now(0, 7, 0, 36); iSearch.BackgroundColor3 = Color3.fromRGB(8, 20, 10); iSearch.TextColor3 = Color3.new(1,1,1); iSearch.Font = Enum.Font.Gotham; iSearch.TextSize = 12; iSearch.PlaceholderText = 'Search items...'; iSearch.PlaceholderColor3 = Color3.fromRGB(80,120,80); iSearch.Text = ''; iSearch.ClearTextOnFocus = false; iSearch.BorderSizePixel = 0
+    local iSearch = Instance.new('TextBox', ItemPanel); iSearch.Name = 'Search'; iSearch.Size = UDim2now(1, -14, 0, 28); iSearch.Position = UDim2now(0, 7, 0, 36); iSearch.BackgroundColor3 = Color3.fromRGB(8, 20, 10); iSearch.TextColor3 = Color3.new(1,1,1); iSearch.Font = Enum.Font.Gotham; iSearch.TextSize = 12; iSearch.PlaceholderText = 'Search items...'; iSearch.PlaceholderColor3 = Color3.fromRGB(80,120,80); iSearch.Text = ''; iSearch.ClearTextOnFocus = false; iSearch.BorderSizePixel = 0
     Instance.new('UICorner', iSearch).CornerRadius = UDim.new(0, 4)
-    Instance.new('UIStroke', iSearch).Color = AccentColor
+    Instance.new('UIStroke', iSearch).Color = Color3.fromRGB(40, 80, 50)
 
-    local iList = Instance.new('ScrollingFrame', ItemPanel); iList.Name = "List"; iList.Size = UDim2now(1, -10, 1, -68); iList.Position = UDim2now(0, 5, 0, 66); iList.BackgroundTransparency = 1; iList.BorderSizePixel = 0; iList.ScrollBarThickness = 2; iList.AutomaticCanvasSize = Enum.AutomaticSize.Y
+    local iList = Instance.new('ScrollingFrame', ItemPanel); iList.Name = "List"; iList.Size = UDim2now(1, -10, 1, -78); iList.Position = UDim2now(0, 5, 0, 72); iList.BackgroundTransparency = 1; iList.BorderSizePixel = 0; iList.ScrollBarThickness = 2; iList.AutomaticCanvasSize = Enum.AutomaticSize.Y
     Instance.new("UIListLayout", iList).Padding = UDim.new(0, 2)
 
-    -- Map Items search filter
+    -- Fixed Search logic
     iSearch:GetPropertyChangedSignal('Text'):Connect(function()
         local q = iSearch.Text:lower()
         for _, child in ipairs(iList:GetChildren()) do
             if child:IsA('TextLabel') then
-                child.Visible = (q == '' or child.Text:lower():find(q) ~= nil)
+                child.Visible = (q == '' or child.Text:lower():find(q, 1, true) ~= nil)
             end
         end
     end)
@@ -245,13 +273,12 @@ function UI_Master:Switch(name)
     self.Elements.Popup.Visible = false
 end
 
-function UI_Master:AddToggle(page, label, key, tooltip)
+function UI_Master:AddToggle(page, label, key, tooltip, callback)
     local state = Settings[key] or false
     local f = Instance.new("Frame", page); f.Size = UDim2now(1, -10, 0, 45); f.BackgroundColor3 = Color3now(15, 20, 15); f.BackgroundTransparency = 0.6; Instance.new("UICorner", f); Instance.new("UIStroke", f).Color = Color3now(30, 40, 30)
     local t = Instance.new("TextLabel", f); t.Size = UDim2now(1, -60, 1, 0); t.Position = UDim2now(0, 60, 0, 0); t.Text = label; t.TextColor3 = Color3.new(0.9,0.9,0.9); t.Font = Enum.Font.GothamBold; t.TextSize = 14; t.TextXAlignment = 0; t.BackgroundTransparency = 1
     
     if tooltip then
-        -- Add tooltip functionality
         local hoverEvent = Instance.new("TextLabel", f)
         hoverEvent.Size = UDim2now(0, 200, 0, 30)
         hoverEvent.Position = UDim2now(0, 60, 1, 5)
@@ -275,7 +302,8 @@ function UI_Master:AddToggle(page, label, key, tooltip)
         Settings[key] = not Settings[key]
         local s = Settings[key]
         Tween:Create(b, TweenInfo.new(0.2), {BackgroundColor3 = s and AccentColor or Color3now(30, 35, 30)}):Play()
-        Tween:Create(i, TweenInfo.new(0.2), {Position = UDim2now(s and 1 or 0, s and -18 or 2, 0.5, -8)}):Play() 
+        Tween:Create(i, TweenInfo.new(0.2), {Position = UDim2now(s and 1 or 0, s and -18 or 2, 0.5, -8)}):Play()
+        if callback then callback(s) end
     end)
 end
 
@@ -317,16 +345,16 @@ for i, txt in ipairs(HeaderList) do
     l.Text = txt; l.TextColor3 = Color3.fromRGB(150, 180, 150); l.Font = Enum.Font.GothamBold; l.TextSize = 10; l.TextXAlignment = (i==1 and 0 or 1)
 end
 
-local function UpdateSearch()
-    local q = tb.Text:lower()
-    for _, child in ipairs(page:GetChildren()) do
-        if child:IsA("Frame") and child.Name == "WikiEntry" then
-            local nm = child:FindFirstChild("Col1") and child.Col1.Text:lower() or ""
-            local match = (q == "") or string.find(nm, q)
-            child.Visible = match
+    local function UpdateSearch()
+        local q = tb.Text:lower()
+        for _, child in ipairs(page:GetChildren()) do
+            if child:IsA("Frame") and child.Name == "WikiEntry" then
+                local nm = child:FindFirstChild("Col1") and child.Col1.Text:lower() or ""
+                local match = (q == "") or (string.find(nm, q, 1, true) ~= nil)
+                child.Visible = match
+            end
         end
     end
-end
 tb:GetPropertyChangedSignal("Text"):Connect(UpdateSearch)
 end
 
@@ -437,6 +465,9 @@ end
 -- Dashboard
 local pgD = UI_Master.Pages.Dashboard
 UI_Master:AddToggle(pgD, "True Instinct", "AutoRoka", "Automatically uses Rokakaka if stand is not desired.")
+UI_Master:AddToggle(pgD, "Map Items Panel", "ShowItemPanel", "Toggle the right side panel visibility", function(s)
+    UI_Master.Elements.ItemPanel.Visible = s
+end)
 local logF = Instance.new("ScrollingFrame", pgD); logF.Size = UDim2.new(1, -10, 0, 200); logF.BackgroundColor3 = Color3.fromRGB(15, 20, 15); logF.BackgroundTransparency = 0.5; logF.BorderSizePixel = 0; logF.ScrollBarThickness = 2; logF.AutomaticCanvasSize = Enum.AutomaticSize.Y; Instance.new("UICorner", logF).CornerRadius = UDim.new(0, 4); local lt = Instance.new("Frame", logF); lt.Size = UDim2.new(1, -20, 1, -20); lt.Position = UDim2.new(0, 10, 0, 10); lt.BackgroundTransparency = 1; Instance.new("UIListLayout", lt).Padding = UDim.new(0, 4)
 local function Line(t, c) local l = Instance.new("TextLabel", lt); l.Size = UDim2.new(1, 0, 0, 18); l.Text = t; l.TextColor3 = c or Color3.fromRGB(200, 200, 200); l.Font = Enum.Font.Code; l.TextSize = 11; l.TextXAlignment = 0; l.BackgroundTransparency = 1 end
 Line("Lite Extreme v43 Loaded.", AccentColor)
@@ -464,7 +495,8 @@ UI_Master:AddToggle(pgESP, "NPC ESP (Yellow)", "NPC_ESP")
 UI_Master:AddToggle(pgESP, "Boss ESP (Red)", "Boss_ESP")
 UI_Master:AddToggle(pgESP, "Player ESP (Green)", "Player_ESP")
 UI_Master:AddToggle(pgESP, "Item ESP (Light Green)", "Item_ESP")
-UI_Master:AddToggle(pgESP, "Show Items on Dashboard", "ShowMapItems", "Displays nearby items in the right panel")
+UI_Master:AddToggle(pgESP, "Nearby Item Scanning", "ShowMapItems", "Calculates and lists nearby items")
+UI_Master:AddToggle(pgESP, "Hitbox Visualizer", "VisualizerActive", "Shows the scanning range sphere")
 
 -- Farming
 local pgF = UI_Master.Pages.Farming
@@ -947,21 +979,72 @@ task.spawn(function()
             end
             if closestItem then
                 pcall(function()
-                    -- Teleport slightly above the item to avoid getting stuck inside geometry
-                    local targetCF = closestItem.Part.CFrame + Vector3.new(0, 3, 0)
-                    hrp.CFrame = targetCF
-                    task.wait(0.2)
-                    -- Try to fire the proximity prompt, temporarily disabling hold requirement
+                    -- Teleport exactly to the item
+                    hrp.CFrame = closestItem.Part.CFrame
+                    task.wait(0.15)
                     local prompt = closestItem.Obj
                     if prompt and prompt:IsA('ProximityPrompt') then
                         local oldHold = prompt.HoldDuration
                         prompt.HoldDuration = 0
-                        fireproximityprompt(prompt)
-                        task.wait(0.3)
+                        -- Fire multiple times to ensure pickup in laggy conditions
+                        for i=1, 3 do
+                            fireproximityprompt(prompt)
+                            task.wait(0.1)
+                        end
                         pcall(function() prompt.HoldDuration = oldHold end)
                     end
                 end)
             end
+        end
+
+        -- Hitbox Visualizer
+        local visPart = workspace:FindFirstChild("LiteExtreme_Visualizer")
+        if Settings.VisualizerActive then
+            if not visPart then
+                visPart = Instance.new("Part", workspace)
+                visPart.Name = "LiteExtreme_Visualizer"
+                visPart.Shape = Enum.PartType.Ball
+                visPart.CastShadow = false
+                visPart.CanCollide = false
+                visPart.Anchored = true
+                visPart.Material = Enum.Material.ForceField
+                visPart.Color = AccentColor
+                visPart.Transparency = 0.8
+            end
+            visPart.CFrame = hrp.CFrame
+            visPart.Size = Vector3.new(Settings.TargetRange*2, Settings.TargetRange*2, Settings.TargetRange*2)
+        elseif visPart then
+            visPart:Destroy()
+        end
+
+        -- Auto Raid NPC (Kumbo) Auto-Talk & Auto-Start
+        if (Settings.AutoRaid or Settings.RaidAutoEnter) and Settings.EngineActive then
+            pcall(function()
+                -- Look for Kumbo nearby
+                local kumbo = workspace:FindFirstChild("Kumbo", true)
+                if kumbo and kumbo:FindFirstChild("HumanoidRootPart") then
+                    local dist = (hrp.Position - kumbo.HumanoidRootPart.Position).Magnitude
+                    if dist < 15 then
+                        local prompt = kumbo:FindFirstChildOfClass("ProximityPrompt", true)
+                        if prompt then fireproximityprompt(prompt) end
+                        
+                        -- Auto-select "Baskın" if dialogue appears
+                        local lpGui = Client:FindFirstChild("PlayerGui")
+                        if lpGui and lpGui:FindFirstChild("Dialogue") and lpGui.Dialogue.Enabled then
+                            local options = lpGui.Dialogue:FindFirstChild("Options", true)
+                            if options then
+                                for _, opt in ipairs(options:GetChildren()) do
+                                    if opt:IsA("TextButton") and (opt.Text:find("Baskın") or opt.Text:find("Raid")) then
+                                        VIM:SendMouseButtonEvent(0, 0, 0, true, game, 0)
+                                        task.wait(0.1)
+                                        VIM:SendMouseButtonEvent(0, 0, 0, false, game, 0)
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+            end)
         end
         
         -- Auto Stand: summon stand via Tab key if not present
