@@ -75,9 +75,10 @@ local function SaveConfig()
     if not s then warn("[LiteExtreme] Save config failed:", err) end
 end
 
-local AccentColor = Color3now(0, 255, 100)
-local SecondaryGreen = Color3now(20, 60, 30)
-local DarkBg = Color3now(5, 12, 8)
+local AccentColor = Color3now(0, 200, 255)
+local SecondaryGreen = Color3now(15, 45, 60)
+local DarkBg = Color3now(8, 8, 10)
+
 
 local WikiData = {
     {Name='Stand Arrow', Stand='-ITEM-', SubAbility='-', Style='-', Desc='Gains access to a Stand.', Img='rbxassetid://13110298083'},
@@ -143,7 +144,8 @@ function UI_Master:Init()
     local SideDiv = Instance.new('Frame', Sidebar); SideDiv.Size = UDim2now(0, 2, 1, 0); SideDiv.Position = UDim2now(1, -2, 0, 0); SideDiv.BackgroundColor3 = AccentColor; SideDiv.BorderSizePixel = 0
 
     local Branding = Instance.new('Frame', Sidebar); Branding.Size = UDim2now(1, 0, 0, 72); Branding.BackgroundTransparency = 1
-    local BrandTitle = Instance.new('TextLabel', Branding); BrandTitle.Size = UDim2now(1, -20, 0, 28); BrandTitle.Position = UDim2now(0, 10, 0, 10); BrandTitle.Text = 'THE REAL'; BrandTitle.TextColor3 = AccentColor; BrandTitle.Font = Enum.Font.GothamBold; BrandTitle.TextSize = 22; BrandTitle.TextXAlignment = 0; BrandTitle.BackgroundTransparency = 1
+    local BrandTitle = Instance.new('TextLabel', Branding); BrandTitle.Size = UDim2now(1, -20, 0, 28); BrandTitle.Position = UDim2now(0, 10, 0, 10); BrandTitle.Text = 'THE REAL'; BrandTitle.TextColor3 = Color3.new(1, 1, 1); BrandTitle.Font = Enum.Font.GothamBold; BrandTitle.TextSize = 25; BrandTitle.TextXAlignment = 0; BrandTitle.BackgroundTransparency = 1
+
     local BrandLink = Instance.new('TextButton', Branding); BrandLink.Size = UDim2now(1, -20, 0, 18); BrandLink.Position = UDim2now(0, 10, 0, 40); BrandLink.Text = 'discord.gg/6AE5zUQB'; BrandLink.TextColor3 = Color3.fromRGB(150, 255, 150); BrandLink.Font = Enum.Font.GothamBold; BrandLink.TextSize = 11; BrandLink.TextXAlignment = 0; BrandLink.BackgroundTransparency = 0.8; BrandLink.BackgroundColor3 = Color3.fromRGB(20, 40, 20); BrandLink.TextWrapped = true
     Instance.new("UICorner", BrandLink).CornerRadius = UDim.new(0, 4)
     Instance.new("UIStroke", BrandLink).Color = Color3.fromRGB(40, 80, 40)
@@ -177,11 +179,12 @@ function UI_Master:Init()
 
     local alb = Instance.new('ImageLabel', IdentityPanel); alb.Size = UDim2now(0, 48, 0, 48); alb.Position = UDim2now(0, 10, 0, 8); alb.Image = 'rbxthumb://type=AvatarHeadShot&id='..Client.UserId..'&w=150&h=150'; alb.BackgroundTransparency = 1; Instance.new('UICorner', alb).CornerRadius = UDim.new(1, 0)
     local sng = Instance.new('TextLabel', IdentityPanel); sng.Size = UDim2now(1, -70, 0, 18); sng.Position = UDim2now(0, 66, 0, 8); sng.Text = Client.DisplayName or Client.Name; sng.TextColor3 = Color3.new(1,1,1); sng.Font = Enum.Font.GothamBold; sng.TextSize = 13; sng.TextXAlignment = 0; sng.BackgroundTransparency = 1; sng.ClipsDescendants = true
-    local nameSub = Instance.new('TextLabel', IdentityPanel); nameSub.Size = UDim2now(1,-70,0,14); nameSub.Position = UDim2now(0,66,0,28); nameSub.Text = '@'..Client.Name; nameSub.TextColor3 = Color3.fromRGB(120,160,120); nameSub.Font = Enum.Font.Gotham; nameSub.TextSize = 11; nameSub.TextXAlignment = 0; nameSub.BackgroundTransparency = 1
+    local nameSub = Instance.new('TextLabel', IdentityPanel); nameSub.Size = UDim2now(1,-70,0,14); nameSub.Position = UDim2now(0,66,0,28); nameSub.Text = '@'..Client.Name; nameSub.TextColor3 = Color3.fromRGB(150, 180, 150); nameSub.Font = Enum.Font.Gotham; nameSub.TextSize = 11; nameSub.TextXAlignment = 0; nameSub.BackgroundTransparency = 1
 
-    local playT = Instance.new('TextLabel', IdentityPanel); playT.Name = "PT"; playT.Size = UDim2now(1, -16, 0, 14); playT.Position = UDim2now(0, 10, 0, 62); playT.Text = 'Playtime: 0h 0m'; playT.TextColor3 = Color3.fromRGB(180, 180, 180); playT.Font = Enum.Font.Gotham; playT.TextSize = 12; playT.TextXAlignment = 0; playT.BackgroundTransparency = 1
-    local yenT = Instance.new('TextLabel', IdentityPanel); yenT.Name = "YT"; yenT.Size = UDim2now(1, -16, 0, 14); yenT.Position = UDim2now(0, 10, 0, 78); yenT.Text = 'Yen: 0'; yenT.TextColor3 = Color3.fromRGB(240, 215, 0); yenT.Font = Enum.Font.Gotham; yenT.TextSize = 12; yenT.TextXAlignment = 0; yenT.BackgroundTransparency = 1
-    local totalYen = Instance.new('TextLabel', IdentityPanel); totalYen.Name = "TY"; totalYen.Size = UDim2now(1, -16, 0, 14); totalYen.Position = UDim2now(0, 10, 0, 96); totalYen.Text = 'Total: 0'; totalYen.TextColor3 = Color3.fromRGB(255, 190, 0); totalYen.Font = Enum.Font.GothamBold; totalYen.TextSize = 12; totalYen.TextXAlignment = 0; totalYen.BackgroundTransparency = 1
+    local playT = Instance.new('TextLabel', IdentityPanel); playT.Name = "PT"; playT.Size = UDim2now(1, -16, 0, 14); playT.Position = UDim2now(0, 10, 0, 62); playT.Text = 'Playtime: 0h 0m'; playT.TextColor3 = Color3.fromRGB(180, 180, 180); playT.Font = Enum.Font.Gotham; playT.TextSize = 11; playT.TextXAlignment = 0; playT.BackgroundTransparency = 1
+    local yenT = Instance.new('TextLabel', IdentityPanel); yenT.Name = "YT"; yenT.Size = UDim2now(1, -16, 0, 14); yenT.Position = UDim2now(0, 10, 0, 78); yenT.Text = 'Yen: 0'; yenT.TextColor3 = Color3.fromRGB(255, 230, 0); yenT.Font = Enum.Font.Gotham; yenT.TextSize = 11; yenT.TextXAlignment = 0; yenT.BackgroundTransparency = 1
+    local totalYen = Instance.new('TextLabel', IdentityPanel); totalYen.Name = "TY"; totalYen.Size = UDim2now(1, -16, 0, 14); totalYen.Position = UDim2now(0, 10, 0, 96); totalYen.Text = 'Total: 0'; totalYen.TextColor3 = AccentColor; totalYen.Font = Enum.Font.GothamBold; totalYen.TextSize = 11; totalYen.TextXAlignment = 0; totalYen.BackgroundTransparency = 1
+
 
     -- Top bar
     local TopBar = Instance.new('Frame', Main)
@@ -189,11 +192,12 @@ function UI_Master:Init()
     TopBar.Position = UDim2now(0, 210, 0, 0)
     TopBar.BackgroundColor3 = Color3.fromRGB(6, 16, 8); TopBar.BackgroundTransparency = 0.1; TopBar.BorderSizePixel = 0
 
-    local Title = Instance.new('TextLabel', TopBar); Title.Size = UDim2now(0, 300, 1, 0); Title.Position = UDim2now(0, 20, 0, 0); Title.Text = 'BIZARRE LINEAGE'; Title.TextColor3 = Color3.new(1,1,1); Title.Font = Enum.Font.GothamBold; Title.TextSize = 22; Title.BackgroundTransparency = 1; Title.TextXAlignment = 0
-    local SubTitle = Instance.new('TextLabel', TopBar); SubTitle.Size = UDim2now(0, 300, 0, 14); SubTitle.Position = UDim2now(0, 22, 0, 34); SubTitle.Text = 'THE REAL INTERNAL'; SubTitle.TextColor3 = Color3.fromRGB(80,160,80); SubTitle.Font = Enum.Font.Gotham; SubTitle.TextSize = 11; SubTitle.BackgroundTransparency = 1; SubTitle.TextXAlignment = 0
+    local Title = Instance.new('TextLabel', TopBar); Title.Size = UDim2now(0, 400, 1, 0); Title.Position = UDim2now(0, 20, 0, 0); Title.Text = 'BIZARRE LINEAGE'; Title.TextColor3 = Color3.new(1,1,1); Title.Font = Enum.Font.GothamBold; Title.TextSize = 28; Title.BackgroundTransparency = 1; Title.TextXAlignment = 0
+
 
     local StatusBox = Instance.new('Frame', TopBar); StatusBox.Size = UDim2now(0, 120, 0, 38); StatusBox.Position = UDim2now(1, -140, 0.5, -19); StatusBox.BackgroundColor3 = Color3.fromRGB(10, 30, 15); StatusBox.BackgroundTransparency = 0.3; Instance.new('UICorner', StatusBox).CornerRadius = UDim.new(0, 6)
-    local fpsL = Instance.new('TextLabel', StatusBox); fpsL.Size = UDim2now(1, 0, 1, 0); fpsL.Text = 'FPS: 0'; fpsL.TextColor3 = AccentColor; fpsL.Font = Enum.Font.GothamBold; fpsL.TextSize = 13; fpsL.BackgroundTransparency = 1
+    local fpsL = Instance.new('TextLabel', StatusBox); fpsL.Size = UDim2now(1, 0, 1, 0); fpsL.Text = 'FPS: 0'; fpsL.TextColor3 = AccentColor; fpsL.Font = Enum.Font.GothamBold; fpsL.TextSize = 18; fpsL.BackgroundTransparency = 1
+
 
     -- Content area (adjusted for right-docked panel)
     local Content = Instance.new('Frame', Main)
@@ -286,29 +290,56 @@ function UI_Master:AddTab(name, index, icon)
     b.BackgroundColor3 = Color3.fromRGB(12, 28, 16); b.BackgroundTransparency = 0.4; b.Text = '  ' .. name; b.TextColor3 = Color3.fromRGB(160, 210, 160); b.Font = Enum.Font.GothamBold; b.TextSize = 13; b.TextXAlignment = 0; b.AutoButtonColor = false; b.BorderSizePixel = 0
     Instance.new('UICorner', b).CornerRadius = UDim.new(0, 6)
     local im = Instance.new('ImageLabel', b); im.Size = UDim2now(0, 16, 0, 16); im.Position = UDim2now(1, -28, 0.5, -8); im.Image = icon or 'rbxassetid://6031230111'; im.BackgroundTransparency = 1; im.ImageColor3 = Color3.fromRGB(160, 210, 160)
-    self.Buttons[name] = b; b.MouseButton1Click:Connect(function() self:Switch(name) end)
+    b.MouseEnter:Connect(function() 
+        if self.Pages[name] and self.Pages[name].Visible then return end
+        Tween:Create(b, TweenInfo.new(0.2), {BackgroundColor3 = Color3now(20, 40, 30), BackgroundTransparency = 0.4}):Play() 
+    end)
+    b.MouseLeave:Connect(function() 
+        if self.Pages[name] and self.Pages[name].Visible then return end
+        Tween:Create(b, TweenInfo.new(0.2), {BackgroundColor3 = Color3now(12, 28, 16), BackgroundTransparency = 0.4}):Play() 
+    end)
+    
+    b.MouseButton1Down:Connect(function() Tween:Create(b, TweenInfo.new(0.1), {Size = UDim2now(1, -10, 0, 34)}):Play() end)
+    b.MouseButton1Up:Connect(function() Tween:Create(b, TweenInfo.new(0.1), {Size = UDim2now(1, 0, 0, 38)}):Play() end)
 
-    local p = Instance.new('ScrollingFrame', self.Elements.Content)
-    p.Size = UDim2now(1, 0, 1, 0); p.BackgroundTransparency = 1; p.Visible = false; p.ScrollBarThickness = 3; p.ScrollBarImageColor3 = AccentColor; p.AutomaticCanvasSize = Enum.AutomaticSize.Y; p.BorderSizePixel = 0
-    local llo = Instance.new('UIListLayout', p); llo.Padding = UDim.new(0, 6); llo.SortOrder = Enum.SortOrder.LayoutOrder
-    local ppad = Instance.new('UIPadding', p); ppad.PaddingLeft = UDim.new(0, 4); ppad.PaddingRight = UDim.new(0, 4); ppad.PaddingTop = UDim.new(0, 6)
+    b.MouseButton1Click:Connect(function() self:Switch(name) end)
+    self.Buttons[name] = b
+    
+    local p = Instance.new('CanvasGroup', self.Elements.Content)
+    p.Name = name .. '_Page'
+    p.Size = UDim2now(1, 0, 1, 0); p.BackgroundTransparency = 1; p.Visible = false;
+    
+    local scroll = Instance.new('ScrollingFrame', p)
+    scroll.Size = UDim2now(1, 0, 1, 0); scroll.BackgroundTransparency = 1; scroll.ScrollBarThickness = 2; scroll.ScrollBarImageColor3 = AccentColor; scroll.AutomaticCanvasSize = Enum.AutomaticSize.Y; scroll.BorderSizePixel = 0
+    
+    local llo = Instance.new('UIListLayout', scroll); llo.Padding = UDim.new(0, 6); llo.SortOrder = Enum.SortOrder.LayoutOrder
+    local ppad = Instance.new('UIPadding', scroll); ppad.PaddingLeft = UDim.new(0, 4); ppad.PaddingRight = UDim.new(0, 4); ppad.PaddingTop = UDim.new(0, 6)
     self.Pages[name] = p
+    self.Elements[name .. '_Scroll'] = scroll
 end
 
+
 function UI_Master:Switch(name)
-    for k, v in pairs(self.Pages) do v.Visible = (k == name) end
+    for k, v in pairs(self.Pages) do
+        if k == name then
+            v.Visible = true
+            v.GroupTransparency = 1
+            Tween:Create(v, TweenInfo.new(0.4), {GroupTransparency = 0}):Play()
+        else
+            v.Visible = false
+        end
+    end
     for k, v in pairs(self.Buttons) do
         local act = (k == name)
         Tween:Create(v, TweenInfo.new(0.3), {
             BackgroundColor3 = act and SecondaryGreen or Color3now(15, 30, 20),
-            BackgroundTransparency = act and 0.2 or 0.5,
-            TextColor3 = act and AccentColor or Color3now(180, 220, 180)
+            BackgroundTransparency = act and 0.2 or 0.6,
+            TextColor3 = act and AccentColor or Color3now(120, 150, 120)
         }):Play()
-        local ic = v:FindFirstChildOfClass('ImageLabel')
-        if ic then Tween:Create(ic, TweenInfo.new(0.3), {ImageColor3 = act and AccentColor or Color3now(180, 220, 180)}):Play() end
     end
     self.Elements.Popup.Visible = false
 end
+
 
 function UI_Master:AddToggle(page, label, key, tooltip, callback)
     local state = Settings[key] or false
@@ -338,11 +369,15 @@ function UI_Master:AddToggle(page, label, key, tooltip, callback)
     b.MouseButton1Click:Connect(function() 
         Settings[key] = not Settings[key]
         local s = Settings[key]
-        Tween:Create(b, TweenInfo.new(0.2), {BackgroundColor3 = s and AccentColor or Color3now(30, 35, 30)}):Play()
-        Tween:Create(i, TweenInfo.new(0.2), {Position = UDim2now(s and 1 or 0, s and -18 or 2, 0.5, -8)}):Play()
+        Tween:Create(b, TweenInfo.new(0.3, Enum.EasingStyle.Quart), {BackgroundColor3 = s and AccentColor or Color3now(30, 35, 30)}):Play()
+        Tween:Create(i, TweenInfo.new(0.3, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Position = UDim2now(s and 1 or 0, s and -18 or 2, 0.5, -8)}):Play()
         if callback then callback(s) end
     end)
+    
+    f.MouseEnter:Connect(function() Tween:Create(f, TweenInfo.new(0.2), {BackgroundColor3 = Color3now(25, 35, 30), BackgroundTransparency = 0.4}):Play() end)
+    f.MouseLeave:Connect(function() Tween:Create(f, TweenInfo.new(0.2), {BackgroundColor3 = Color3now(15, 20, 15), BackgroundTransparency = 0.6}):Play() end)
 end
+
 
 function UI_Master:AddSlider(page, label, key, min, max, sfx, prec)
     local val = Settings[key] or min
@@ -372,7 +407,11 @@ function UI_Master:AddSlider(page, label, key, min, max, sfx, prec)
             end
         end 
     end)
+    
+    f.MouseEnter:Connect(function() Tween:Create(f, TweenInfo.new(0.2), {BackgroundColor3 = Color3now(25, 35, 30), BackgroundTransparency = 0.4}):Play() end)
+    f.MouseLeave:Connect(function() Tween:Create(f, TweenInfo.new(0.2), {BackgroundColor3 = Color3now(15, 20, 15), BackgroundTransparency = 0.6}):Play() end)
 end
+
 
 function UI_Master:AddDropdown(page, label, key, options)
     local f = Instance.new("Frame", page); f.Size = UDim2now(1, -10, 0, 45); f.BackgroundColor3 = Color3now(15, 20, 15); f.BackgroundTransparency = 0.6; f.ZIndex = 2; Instance.new("UICorner", f); Instance.new("UIStroke", f).Color = Color3now(30, 40, 30)
@@ -516,52 +555,53 @@ function UI_Master:ServerHop()
 end
 
 -- Dashboard
-local pgD = UI_Master.Pages.Dashboard
-UI_Master:AddToggle(pgD, "True Instinct", "AutoRoka", "Automatically uses Rokakaka if stand is not desired.")
-local logF = Instance.new("ScrollingFrame", pgD); logF.Size = UDim2.new(1, -10, 0, 200); logF.BackgroundColor3 = Color3.fromRGB(15, 20, 15); logF.BackgroundTransparency = 0.5; logF.BorderSizePixel = 0; logF.ScrollBarThickness = 2; logF.AutomaticCanvasSize = Enum.AutomaticSize.Y; Instance.new("UICorner", logF).CornerRadius = UDim.new(0, 4); local lt = Instance.new("Frame", logF); lt.Size = UDim2.new(1, -20, 1, -20); lt.Position = UDim2.new(0, 10, 0, 10); lt.BackgroundTransparency = 1; Instance.new("UIListLayout", lt).Padding = UDim.new(0, 4)
-local function Line(t, c) local l = Instance.new("TextLabel", lt); l.Size = UDim2.new(1, 0, 0, 18); l.Text = t; l.TextColor3 = c or Color3.fromRGB(200, 200, 200); l.Font = Enum.Font.Code; l.TextSize = 11; l.TextXAlignment = 0; l.BackgroundTransparency = 1 end
-Line("Lite Extreme v43 Loaded.", AccentColor)
-Line("Features Cleaned & Re-Organized.", Color3.new(0.5, 1, 0.5))
+local scD = UI_Master.Elements.Dashboard_Scroll
+UI_Master:AddToggle(scD, "True Instinct", "AutoRoka", "Automatically uses Rokakaka if stand is not desired.")
+local logF = Instance.new("ScrollingFrame", scD); logF.Size = UDim2.new(1, -10, 0, 180); logF.BackgroundColor3 = Color3.fromRGB(15, 20, 15); logF.BackgroundTransparency = 0.5; logF.BorderSizePixel = 0; logF.ScrollBarThickness = 2; logF.AutomaticCanvasSize = Enum.AutomaticSize.Y; Instance.new("UICorner", logF).CornerRadius = UDim.new(0, 4); local lt = Instance.new("Frame", logF); lt.Size = UDim2.new(1, -20, 1, -20); lt.Position = UDim2.new(0, 10, 0, 10); lt.BackgroundTransparency = 1; Instance.new("UIListLayout", lt).Padding = UDim.new(0, 4)
+local function Line(t, c) local l = Instance.new("TextLabel", lt); l.Size = UDim2.new(1, 0, 0, 18); l.Text = t; l.TextColor3 = c or Color3.fromRGB(150, 180, 150); l.Font = Enum.Font.Code; l.TextSize = 11; l.TextXAlignment = 0; l.BackgroundTransparency = 1 end
+Line("THE REAL v43 Loaded.", AccentColor)
+Line("Visual Overhaul Applied.", Color3.new(0.5, 0.8, 1))
 
 -- Combat
-local pgC = UI_Master.Pages.Combat
-UI_Master:AddToggle(pgC, "Auto M1", "AutoM1", "Auto Left Click continuously")
-UI_Master:AddToggle(pgC, "God Mode", "GodModeActive", "Attempts to loop dodge I-frames")
-UI_Master:AddSlider(pgC, "Click Speed (Hold)", "ClickSpeed", 0.001, 0.05, "s", 3)
-UI_Master:AddSlider(pgC, "Attack Interval", "MacroInterval", 0.001, 0.5, "s", 3)
+local scC = UI_Master.Elements.Combat_Scroll
+UI_Master:AddToggle(scC, "Auto M1", "AutoM1", "Auto Left Click continuously")
+UI_Master:AddToggle(scC, "God Mode", "GodModeActive", "Attempts to loop dodge I-frames")
+UI_Master:AddSlider(scC, "Click Speed (Hold)", "ClickSpeed", 0.001, 0.05, "s", 3)
+UI_Master:AddSlider(scC, "Attack Interval", "MacroInterval", 0.001, 0.5, "s", 3)
 
--- Skills (New Tab to decrease clutter)
-local pgSkills = UI_Master.Pages.Skills
-UI_Master:AddToggle(pgSkills, "Auto E (Barrage)", "AutoSkillE")
-UI_Master:AddToggle(pgSkills, "Auto R (Heavy)", "AutoSkillR")
-UI_Master:AddToggle(pgSkills, "Auto Z", "AutoSkillZ")
-UI_Master:AddToggle(pgSkills, "Auto X", "AutoSkillX")
-UI_Master:AddToggle(pgSkills, "Auto C", "AutoSkillC")
-UI_Master:AddToggle(pgSkills, "Auto V", "AutoSkillV")
+-- Skills
+local scSkills = UI_Master.Elements.Skills_Scroll
+UI_Master:AddToggle(scSkills, "Auto E (Barrage)", "AutoSkillE")
+UI_Master:AddToggle(scSkills, "Auto R (Heavy)", "AutoSkillR")
+UI_Master:AddToggle(scSkills, "Auto Z", "AutoSkillZ")
+UI_Master:AddToggle(scSkills, "Auto X", "AutoSkillX")
+UI_Master:AddToggle(scSkills, "Auto C", "AutoSkillC")
+UI_Master:AddToggle(scSkills, "Auto V", "AutoSkillV")
 
--- ESP (New Tab)
-local pgESP = UI_Master.Pages.ESP
-UI_Master:AddToggle(pgESP, "NPC ESP (Yellow)", "NPC_ESP")
-UI_Master:AddToggle(pgESP, "Boss ESP (Red)", "Boss_ESP")
-UI_Master:AddToggle(pgESP, "Player ESP (Green)", "Player_ESP")
-UI_Master:AddToggle(pgESP, "Item ESP (Light Green)", "Item_ESP")
-UI_Master:AddToggle(pgESP, "Map Items Panel", "ShowItemPanel", "Toggle visibility of the right side panel", function(s)
+
+-- ESP
+local scESP = UI_Master.Elements.ESP_Scroll
+UI_Master:AddToggle(scESP, "NPC ESP (Yellow)", "NPC_ESP")
+UI_Master:AddToggle(scESP, "Boss ESP (Red)", "Boss_ESP")
+UI_Master:AddToggle(scESP, "Player ESP (Ice Cyan)", "Player_ESP")
+UI_Master:AddToggle(scESP, "Item ESP (Light Green)", "Item_ESP")
+UI_Master:AddToggle(scESP, "Map Items Panel", "ShowItemPanel", "Toggle visibility of the right side panel", function(s)
     UI_Master.Elements.ItemPanel.Visible = s
 end)
-UI_Master:AddToggle(pgESP, "Hitbox Visualizer", "VisualizerActive", "Shows the scanning range sphere")
+UI_Master:AddToggle(scESP, "Hitbox Visualizer", "VisualizerActive", "Shows the scanning range sphere")
 
 -- Farming
-local pgF = UI_Master.Pages.Farming
-UI_Master:AddToggle(pgF, "Auto Farm", "AutoFarm", "Farm NPCs/Bosses around you", function(s)
+local scF = UI_Master.Elements.Farming_Scroll
+UI_Master:AddToggle(scF, "Auto Farm", "AutoFarm", "Farm NPCs/Bosses around you", function(s)
     Settings.AutoM1 = s
 end)
-UI_Master:AddToggle(pgF, "Attack Bosses Only", "FarmOnlyBoss")
-UI_Master:AddToggle(pgF, "Advanced Scan (Deeper)", "AdvancedScan", "Scans more objects (May cause FPS drops!)")
-local fWarn = Instance.new("TextLabel", pgF); fWarn.Size = UDim2now(1, -10, 0, 30); fWarn.Text = "⚠️ ADVANCED SCAN: RECOMMENDED FOR BEST ITEM DETECTION"; fWarn.TextColor3 = Color3.fromRGB(255, 100, 100); fWarn.Font = Enum.Font.GothamBold; fWarn.TextSize = 10; fWarn.BackgroundTransparency = 1; fWarn.TextWrapped = true
-UI_Master:AddSlider(pgF, "Scan Interval", "ScanInterval", 0.1, 5, "s", 1)
-UI_Master:AddDropdown(pgF, "Attack Angle", "FarmAngle", {"Below (Default)", "Above", "Behind", "Front", "Right", "Left"})
-UI_Master:AddSlider(pgF, "Attack Distance", "FarmDist", 0, 15)
-UI_Master:AddSlider(pgF, "Max Scan Range", "TargetRange", 10, 500)
+UI_Master:AddToggle(scF, "Attack Bosses Only", "FarmOnlyBoss")
+UI_Master:AddToggle(scF, "Advanced Scan (Deeper)", "AdvancedScan", "Scans more objects (May cause FPS drops!)")
+local fWarn = Instance.new("TextLabel", scF); fWarn.Size = UDim2now(1, -10, 0, 30); fWarn.Text = "⚠️ ADVANCED SCAN: RECOMMENDED FOR BEST ITEM DETECTION"; fWarn.TextColor3 = Color3.fromRGB(255, 100, 100); fWarn.Font = Enum.Font.GothamBold; fWarn.TextSize = 10; fWarn.BackgroundTransparency = 1; fWarn.TextWrapped = true
+UI_Master:AddSlider(scF, "Scan Interval", "ScanInterval", 0.1, 5, "s", 1)
+UI_Master:AddDropdown(scF, "Attack Angle", "FarmAngle", {"Below (Default)", "Above", "Behind", "Front", "Right", "Left"})
+UI_Master:AddSlider(scF, "Attack Distance", "FarmDist", 0, 15)
+UI_Master:AddSlider(scF, "Max Scan Range", "TargetRange", 10, 500)
 local function MakeRangeSlider(page, label, key, minV, maxV)
     local row = Instance.new("Frame", page); row.Size = UDim2.new(1,-10,0,50); row.BackgroundTransparency = 1
     local lbl = Instance.new("TextLabel", row); lbl.Size = UDim2.new(1,0,0,20); lbl.TextColor3 = Color3.new(0.9,0.9,0.9); lbl.Font = Enum.Font.GothamBold; lbl.TextSize = 13; lbl.TextXAlignment = 0; lbl.BackgroundTransparency = 1
@@ -580,24 +620,28 @@ local function MakeRangeSlider(page, label, key, minV, maxV)
             Settings[key] = math.floor(minV + (maxV-minV)*pct); fl.Size = UDim2.new(pct,0,1,0); Upd()
         end
     end)
+    row.MouseEnter:Connect(function() Tween:Create(bg, TweenInfo.new(0.2), {BackgroundColor3 = Color3now(40, 45, 40)}):Play() end)
+    row.MouseLeave:Connect(function() Tween:Create(bg, TweenInfo.new(0.2), {BackgroundColor3 = Color3now(30, 35, 30)}):Play() end)
 end
-MakeRangeSlider(pgF, "Item ESP Range", "ItemESPRange", 30, 2000)
+MakeRangeSlider(scF, "Item ESP Range", "ItemESPRange", 30, 2000)
+
 -- Raid
-local pgR = UI_Master.Pages.Raid
-UI_Master:AddToggle(pgR, "Auto Raid", "AutoRaid")
-UI_Master:AddToggle(pgR, "Auto Enter", "RaidAutoEnter")
-UI_Master:AddToggle(pgR, "Auto Retry", "RaidAutoRetry")
-UI_Master:AddSlider(pgR, "Raid Retry Delay", "RaidDelay", 0, 5, "s")
+local scR = UI_Master.Elements.Raid_Scroll
+UI_Master:AddToggle(scR, "Auto Raid", "AutoRaid")
+UI_Master:AddToggle(scR, "Auto Enter", "RaidAutoEnter")
+UI_Master:AddToggle(scR, "Auto Retry", "RaidAutoRetry")
+UI_Master:AddSlider(scR, "Raid Retry Delay", "RaidDelay", 0, 5, "s")
 
 -- Tools
-local pgTools = UI_Master.Pages.Tools
-UI_Master:AddToggle(pgTools, "Auto Dialog (Skip NPCs)", "AutoDialog")
-UI_Master:AddToggle(pgTools, "Stealth Mode", "StealthMode", "Makes your character transparent locally")
-UI_Master:AddToggle(pgTools, "Auto Stand (Tab Summon)", "AutoStand", "Automatically presses Tab to summon Stand if missing")
+local scTools = UI_Master.Elements.Tools_Scroll
+UI_Master:AddToggle(scTools, "Auto Dialog (Skip NPCs)", "AutoDialog")
+UI_Master:AddToggle(scTools, "Stealth Mode", "StealthMode", "Makes your character transparent locally")
+UI_Master:AddToggle(scTools, "Auto Stand (Tab Summon)", "AutoStand", "Automatically presses Tab to summon Stand if missing")
 
-local shBtn = Instance.new("TextButton", pgTools); shBtn.Size = UDim2now(1, -10, 0, 40); shBtn.BackgroundColor3 = SecondaryGreen; shBtn.Text = "SERVER HOP (Random)"; shBtn.TextColor3 = Color3now(255,255,255); shBtn.Font = Enum.Font.GothamBold; shBtn.TextSize = 14; Instance.new("UICorner", shBtn)
+local shBtn = Instance.new("TextButton", scTools); shBtn.Size = UDim2now(1, -10, 0, 40); shBtn.BackgroundColor3 = SecondaryGreen; shBtn.Text = "SERVER HOP (Random)"; shBtn.TextColor3 = Color3now(255,255,255); shBtn.Font = Enum.Font.GothamBold; shBtn.TextSize = 14; Instance.new("UICorner", shBtn)
 shBtn.MouseButton1Click:Connect(function() 
     if _G.QueueLoader then _G.QueueLoader() end
+
     task.wait(0.2)
     UI_Master:ServerHop() 
 end)
@@ -649,12 +693,14 @@ do
 end
 
 -- Teleport
-local pgT = UI_Master.Pages.Teleport
-UI_Master:AddToggle(pgT, "Safe TP", "SafeTP", "Tweens character to destination safely")
-UI_Master:AddSlider(pgT, "TP Speed", "WalkSpeed", 16, 500)
+local scT = UI_Master.Elements.Teleport_Scroll
+UI_Master:AddToggle(scT, "Safe TP", "SafeTP", "Tweens character to destination safely")
+UI_Master:AddSlider(scT, "TP Speed", "WalkSpeed", 16, 500)
 
 for i=1, 20 do
-    local b = Instance.new("TextButton", pgT); b.Size = UDim2.new(1, -10, 0, 35); b.BackgroundColor3 = Color3.fromRGB(20, 30, 20); b.Text = "Teleport: Stop " .. i; b.TextColor3 = Color3.new(1,1,1); b.Font = Enum.Font.GothamBold; b.TextSize = 12; Instance.new("UICorner", b).CornerRadius = UDim.new(0, 4)
+    local b = Instance.new("TextButton", scT); b.Size = UDim2.new(1, -10, 0, 35); b.BackgroundColor3 = Color3.fromRGB(20, 30, 20); b.Text = "Teleport: Stop " .. i; b.TextColor3 = Color3.new(1,1,1); b.Font = Enum.Font.GothamBold; b.TextSize = 12; Instance.new("UICorner", b).CornerRadius = UDim.new(0, 4)
+    b.MouseEnter:Connect(function() Tween:Create(b, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(30, 50, 40)}):Play() end)
+    b.MouseLeave:Connect(function() Tween:Create(b, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(20, 30, 20)}):Play() end)
     b.MouseButton1Click:Connect(function() 
         pcall(function() 
             local hum, hrp
@@ -677,7 +723,7 @@ for i=1, 20 do
 end
 
 -- Misc
-local pgM = UI_Master.Pages.Misc
+local scM = UI_Master.Elements.Misc_Scroll
 local function AddSpeedControl(page, label, key, default, minV, maxV)
     local row = Instance.new("Frame", page); row.Size = UDim2.new(1,-10,0,60); row.BackgroundTransparency = 1
     local lbl = Instance.new("TextLabel", row); lbl.Size = UDim2.new(1,0,0,18); lbl.Text = label; lbl.TextColor3 = Color3.new(1,1,1); lbl.Font = Enum.Font.GothamBold; lbl.TextSize = 13; lbl.TextXAlignment = 0; lbl.BackgroundTransparency = 1
@@ -691,8 +737,8 @@ local function AddSpeedControl(page, label, key, default, minV, maxV)
     UIS.InputEnded:Connect(function(io) if io.UserInputType == Enum.UserInputType.MouseButton1 then md = false; Tween:Create(knob,TweenInfo.new(0.1),{Size=UDim2.new(0,14,0,14),Position=UDim2.new(1,-7,0.5,-7)}):Play() end end)
     UIS.InputChanged:Connect(function(io)
         if md and io.UserInputType == Enum.UserInputType.MouseMovement then
-            local pct = math.clamp((io.Position.X - bg.AbsolutePosition.X) / bg.AbsoluteSize.X, 0, 1)
-            local val = math.floor(minV + (maxV-minV)*pct)
+            local pct = math_clamp((io.Position.X - bg.AbsolutePosition.X) / bg.AbsoluteSize.X, 0, 1)
+            local val = math_floor(minV + (maxV-minV)*pct)
             Settings[key] = val; fl.Size = UDim2.new(pct,0,1,0); box.Text = tostring(val)
         end
     end)
@@ -705,18 +751,20 @@ local function AddSpeedControl(page, label, key, default, minV, maxV)
             box.Text = tostring(default); Settings[key] = default
         end
     end)
+    row.MouseEnter:Connect(function() Tween:Create(bg, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(40, 45, 40)}):Play() end)
+    row.MouseLeave:Connect(function() Tween:Create(bg, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(30, 35, 30)}):Play() end)
 end
 
-AddSpeedControl(pgM, "Walk Speed (16 = default)", "WalkSpeed", 16, 8, 500)
-AddSpeedControl(pgM, "Jump Power (50 = default)", "JumpPower", 50, 20, 500)
+AddSpeedControl(scM, "Walk Speed (16 = default)", "WalkSpeed", 16, 8, 500)
+AddSpeedControl(scM, "Jump Power (50 = default)", "JumpPower", 50, 20, 500)
 
-local mapHdr = Instance.new("TextLabel", pgM); mapHdr.Size = UDim2.new(1,-10,0,25); mapHdr.Text = "-- Farm Extras --"; mapHdr.TextColor3 = AccentColor; mapHdr.Font = Enum.Font.GothamBold; mapHdr.TextSize = 12; mapHdr.TextXAlignment = 0; mapHdr.BackgroundTransparency = 1
-UI_Master:AddToggle(pgM, "Auto Farm Items", "AutoItemFarm")
-UI_Master:AddToggle(pgM, "Master Toggle (Key: K)", "EngineActive", "Main switch for all combat and farm hooks")
+local mapHdr = Instance.new("TextLabel", scM); mapHdr.Size = UDim2.new(1,-10,0,25); mapHdr.Text = "-- Farm Extras --"; mapHdr.TextColor3 = AccentColor; mapHdr.Font = Enum.Font.GothamBold; mapHdr.TextSize = 12; mapHdr.TextXAlignment = 0; mapHdr.BackgroundTransparency = 1
+UI_Master:AddToggle(scM, "Auto Farm Items", "AutoItemFarm")
+UI_Master:AddToggle(scM, "Master Toggle (Key: K)", "EngineActive", "Main switch for all combat and farm hooks")
 
-local perfHdr = Instance.new("TextLabel", pgM); perfHdr.Size = UDim2.new(1,-10,0,25); perfHdr.Text = "-- Performance Tweaks --"; perfHdr.TextColor3 = AccentColor; perfHdr.Font = Enum.Font.GothamBold; perfHdr.TextSize = 12; perfHdr.TextXAlignment = 0; perfHdr.BackgroundTransparency = 1
-UI_Master:AddToggle(pgM, "Advanced Scan (Deeper, Slower)", "AdvancedScan")
-UI_Master:AddSlider(pgM, "Scan Interval (Seconds)", "ScanInterval", 1, 5)
+local perfHdr = Instance.new("TextLabel", scM); perfHdr.Size = UDim2.new(1,-10,0,25); perfHdr.Text = "-- Performance Tweaks --"; perfHdr.TextColor3 = AccentColor; perfHdr.Font = Enum.Font.GothamBold; perfHdr.TextSize = 12; perfHdr.TextXAlignment = 0; perfHdr.BackgroundTransparency = 1
+UI_Master:AddToggle(scM, "Advanced Scan (Deeper, Slower)", "AdvancedScan")
+UI_Master:AddSlider(scM, "Scan Interval (Seconds)", "ScanInterval", 1, 5)
 
 local function UpdateGuardUI()
     if UI_Master.Elements.Guard then
@@ -735,58 +783,54 @@ task.spawn(function()
 end)
 
 -- Wiki
-local pgW = UI_Master.Pages.Wiki; UI_Master:AddWikiSearch(pgW); for _, item in ipairs(WikiData) do UI_Master:AddWikiEntry(pgW, item) end
+local scW = UI_Master.Elements.Wiki_Scroll
+UI_Master:AddWikiSearch(scW)
+for _, item in ipairs(WikiData) do UI_Master:AddWikiEntry(scW, item) end
 
 -- Settings
-local pgS = UI_Master.Pages.Settings
+local scS = UI_Master.Elements.Settings_Scroll
 local function Snd() pcall(function() local s = Instance.new("Sound", game.SoundService); s.SoundId = "rbxassetid://6518811702"; s.Volume = 0.9; s.RollOffMaxDistance = 100; s:Play(); game:GetService("Debris"):AddItem(s, 2) end) end
-local function MakeSect(parent, title) local hdr = Instance.new("TextLabel", parent); hdr.Size = UDim2.new(1,-10,0,20); hdr.Text = title; hdr.TextColor3 = AccentColor; hdr.Font = Enum.Font.GothamBold; hdr.TextSize = 12; hdr.TextXAlignment = 0; hdr.BackgroundTransparency = 1; return hdr end
+local function MakeSect(parent, title) local hdr = Instance.new("TextLabel", parent); hdr.Size = UDim2.new(1,-10,0,22); hdr.Text = title; hdr.TextColor3 = Color3.new(1,1,1); hdr.Font = Enum.Font.GothamBold; hdr.TextSize = 13; hdr.TextXAlignment = 0; hdr.BackgroundTransparency = 1; return hdr end
 local function MakeInput(parent, label, defaultVal, onChange)
     local wrap = Instance.new("Frame", parent); wrap.Size = UDim2.new(1,-10,0,60); wrap.BackgroundTransparency = 1
-    local lbl = Instance.new("TextLabel", wrap); lbl.Size = UDim2.new(1,0,0,20); lbl.Text = label; lbl.TextColor3 = AccentColor; lbl.Font = Enum.Font.Gotham; lbl.TextSize = 12; lbl.TextXAlignment = 0; lbl.BackgroundTransparency = 1
+    local lbl = Instance.new("TextLabel", wrap); lbl.Size = UDim2.new(1,0,0,20); lbl.Text = label; lbl.TextColor3 = AccentColor; lbl.Font = Enum.Font.GothamBold; lbl.TextSize = 11; lbl.TextXAlignment = 0; lbl.BackgroundTransparency = 1
     local box = Instance.new("TextBox", wrap); box.Size = UDim2.new(1,0,0,32); box.Position = UDim2.new(0,0,0,22); box.BackgroundColor3 = Color3.fromRGB(8,18,10); box.TextColor3 = Color3.new(1,1,1); box.Font = Enum.Font.GothamBold; box.TextSize = 13; box.Text = tostring(defaultVal); box.ClearTextOnFocus = false; Instance.new("UICorner",box).CornerRadius = UDim.new(0,4); Instance.new("UIStroke",box).Color = AccentColor
     box.Focused:Connect(function() Snd() end)
     box:GetPropertyChangedSignal("Text"):Connect(function() pcall(function() onChange(box.Text) end) end)
     return box
 end
 
-MakeInput(pgS, "Config File Name:", Settings.ConfigName, function(v) Settings.ConfigName = v end)
+MakeInput(scS, "Config File Name:", Settings.ConfigName, function(v) Settings.ConfigName = v end)
 
-local saveBtn = Instance.new("TextButton", pgS); saveBtn.Size = UDim2.new(1,-10,0,38); saveBtn.BackgroundColor3 = Color3.fromRGB(0,80,30); saveBtn.TextColor3 = Color3.new(1,1,1); saveBtn.Font = Enum.Font.GothamBold; saveBtn.TextSize = 14; saveBtn.Text = "SAVE CONFIG"; Instance.new("UICorner",saveBtn).CornerRadius = UDim.new(0,4)
+local saveBtn = Instance.new("TextButton", scS); saveBtn.Size = UDim2.new(1,-10,0,38); saveBtn.BackgroundColor3 = Color3.fromRGB(0,80,30); saveBtn.TextColor3 = Color3.new(1,1,1); saveBtn.Font = Enum.Font.GothamBold; saveBtn.TextSize = 14; saveBtn.Text = "SAVE CONFIG"; Instance.new("UICorner",saveBtn).CornerRadius = UDim.new(0,4)
 saveBtn.MouseButton1Click:Connect(function() Snd(); SaveConfig(); saveBtn.Text = "CONFIG SAVED"; saveBtn.BackgroundColor3 = AccentColor; task.delay(2, function() saveBtn.Text = "SAVE CONFIG"; saveBtn.BackgroundColor3 = Color3.fromRGB(0,80,30) end) end)
 
-local loadBtn = Instance.new("TextButton", pgS); loadBtn.Size = UDim2.new(1,-10,0,38); loadBtn.BackgroundColor3 = Color3.fromRGB(0,40,80); loadBtn.TextColor3 = Color3.new(1,1,1); loadBtn.Font = Enum.Font.GothamBold; loadBtn.TextSize = 14; loadBtn.Text = "LOAD CONFIG"; Instance.new("UICorner",loadBtn).CornerRadius = UDim.new(0,4)
+local loadBtn = Instance.new("TextButton", scS); loadBtn.Size = UDim2.new(1,-10,0,38); loadBtn.BackgroundColor3 = Color3.fromRGB(0,40,80); loadBtn.TextColor3 = Color3.new(1,1,1); loadBtn.Font = Enum.Font.GothamBold; loadBtn.TextSize = 14; loadBtn.Text = "LOAD CONFIG"; Instance.new("UICorner",loadBtn).CornerRadius = UDim.new(0,4)
 loadBtn.MouseButton1Click:Connect(function() Snd(); LoadConfig(); loadBtn.Text = "LOADED!"; loadBtn.BackgroundColor3 = AccentColor; task.delay(2, function() loadBtn.Text = "LOAD CONFIG"; loadBtn.BackgroundColor3 = Color3.fromRGB(0,40,80) end) end)
 
-MakeSect(pgS, "Menu UI Keybind:")
-local bindBtn = Instance.new("TextButton", pgS); bindBtn.Size = UDim2.new(1,-10,0,38); bindBtn.BackgroundColor3 = Color3.fromRGB(30,30,60); bindBtn.TextColor3 = Color3.new(1,1,1); bindBtn.Font = Enum.Font.GothamBold; bindBtn.TextSize = 13; bindBtn.Text = "Press to bind: [" .. Settings.MenuKey .. "]"; Instance.new("UICorner",bindBtn).CornerRadius = UDim.new(0,4); Instance.new("UIStroke",bindBtn).Color = AccentColor
-local waitingBind = false
-bindBtn.MouseButton1Click:Connect(function()
-    if waitingBind then return end; waitingBind = true; bindBtn.Text = "Press any key..."; bindBtn.BackgroundColor3 = Color3.fromRGB(60,60,0)
-    local conn; conn = UIS.InputBegan:Connect(function(inp, gp)
-        if gp then return end
-        local n = inp.KeyCode.Name ~= "Unknown" and inp.KeyCode.Name or inp.UserInputType.Name
-        Settings.MenuKey = n; bindBtn.Text = "Bound: [" .. n .. "]"; bindBtn.BackgroundColor3 = Color3.fromRGB(0,60,20)
-        Snd(); conn:Disconnect(); waitingBind = false
+UI_Master:AddToggle(scS, "Auto Rejoin", "AutoRejoin")
+UI_Master:AddToggle(scS, "Anti AFK", "AntiAFK")
+UI_Master:AddSlider(scS, "UI Transparency", "UITransparency", 0, 100, "%")
+UI_Master:AddSlider(scS, "Raid Start Delay", "RaidDelay", 0.1, 5, "s", 1)
+
+MakeSect(scS, "Keybinds")
+local function MakeBind(label, keySetting)
+    local b = Instance.new("TextButton", scS); b.Size = UDim2.new(1,-10,0,38); b.BackgroundColor3 = Color3.fromRGB(30,30,60); b.TextColor3 = Color3.new(1,1,1); b.Font = Enum.Font.GothamBold; b.TextSize = 13; b.Text = label .. ": [" .. Settings[keySetting] .. "]"; Instance.new("UICorner",b).CornerRadius = UDim.new(0,4); Instance.new("UIStroke",b).Color = AccentColor
+    local waiting = false
+    b.MouseButton1Click:Connect(function()
+        if waiting then return end; waiting = true; b.Text = "Press any key..."; b.BackgroundColor3 = Color3.fromRGB(60,60,0)
+        local conn; conn = UIS.InputBegan:Connect(function(inp, gp)
+            if gp then return end
+            local n = inp.KeyCode.Name ~= "Unknown" and inp.KeyCode.Name or inp.UserInputType.Name
+            Settings[keySetting] = n; b.Text = label .. ": [" .. n .. "]"; b.BackgroundColor3 = Color3.fromRGB(0,60,20)
+            Snd(); conn:Disconnect(); waiting = false
+        end)
     end)
-end)
+end
+MakeBind("Menu Key", "MenuKey")
+MakeBind("Master Toggle Key", "MasterKey")
 
-MakeSect(pgS, "Master Toggle Keybind:")
-local masterBindBtn = Instance.new("TextButton", pgS); masterBindBtn.Size = UDim2.new(1,-10,0,38); masterBindBtn.BackgroundColor3 = Color3.fromRGB(30,30,60); masterBindBtn.TextColor3 = Color3.new(1,1,1); masterBindBtn.Font = Enum.Font.GothamBold; masterBindBtn.TextSize = 13; masterBindBtn.Text = "Press to bind Master Toggle: [" .. Settings.MasterKey .. "]"; Instance.new("UICorner",masterBindBtn).CornerRadius = UDim.new(0,4); Instance.new("UIStroke",masterBindBtn).Color = AccentColor
-local mWaitingBind = false
-masterBindBtn.MouseButton1Click:Connect(function()
-    if mWaitingBind then return end; mWaitingBind = true; masterBindBtn.Text = "Press any key..."; masterBindBtn.BackgroundColor3 = Color3.fromRGB(60,60,0)
-    local conn; conn = UIS.InputBegan:Connect(function(inp, gp)
-        if gp then return end
-        local n = inp.KeyCode.Name ~= "Unknown" and inp.KeyCode.Name or inp.UserInputType.Name
-        Settings.MasterKey = n; masterBindBtn.Text = "Bound: [" .. n .. "]"; masterBindBtn.BackgroundColor3 = Color3.fromRGB(0,60,20)
-        Snd(); conn:Disconnect(); mWaitingBind = false
-    end)
-end)
-
-UI_Master:AddSlider(pgS, "UI Transparency", "UITransparency", 0, 80, "%")
-
-local confFrame = Instance.new("Frame", pgS); confFrame.Size = UDim2now(1, -10, 0, 140); confFrame.Position = UDim2now(0, 5, 0, 280); confFrame.BackgroundTransparency = 1; Instance.new("UIListLayout", confFrame).Padding = UDim.new(0, 6)
+local confFrame = Instance.new("Frame", scS); confFrame.Size = UDim2now(1, -10, 0, 140); confFrame.BackgroundTransparency = 1; Instance.new("UIListLayout", confFrame).Padding = UDim.new(0, 6)
 local function PrefBtn(txt, cb) 
     local b = Instance.new("TextButton", confFrame); b.Size = UDim2now(1, 0, 0, 34); b.Text = txt; b.BackgroundColor3 = SecondaryGreen; b.TextColor3 = Color3.new(1,1,1); b.Font = Enum.Font.GothamBold; b.TextSize = 13; b.AutoButtonColor = true; Instance.new("UICorner", b)
     b.MouseButton1Click:Connect(cb) 
@@ -794,7 +838,7 @@ end
 
 PrefBtn("EXPORT CONFIG (CODE)", function()
     local enc = base64_encode(Http:JSONEncode(Settings))
-    setclipboard(enc)
+    setClipboard(enc)
     Line("Config code copied! Share it with friends.", AccentColor)
 end)
 
@@ -804,16 +848,17 @@ PrefBtn("IMPORT CONFIG (PASTE CODE)", function()
     local s, res = pcall(function() return Http:JSONDecode(base64_decode(input)) end)
     if s and type(res) == "table" then
         Line("VALID CONFIG DETECTED", AccentColor)
-        local cF = Instance.new("Frame", pgS); cF.Size = UDim2now(1, -10, 0, 60); cF.BackgroundColor3 = Color3.new(0.2, 0.4, 0.2); Instance.new("UICorner", cF); cF.Position = UDim2now(0, 5, 0, 30); cF.ZIndex = 200
-        local cT = Instance.new("TextLabel", cF); cT.Size = UDim2now(1, 0, 0, 30); cT.Text = "Use this configuration?"; cT.TextColor3 = Color3.new(1,1,1); cT.Font = Enum.Font.GothamBold; cT.BackgroundTransparency = 1; cT.TextSize = 14; cT.ZIndex = 201
-        local yB = Instance.new("TextButton", cF); yB.Size = UDim2now(0.5, -10, 0, 25); yB.Position = UDim2now(0, 5, 0, 30); yB.Text = "YES"; yB.BackgroundColor3 = AccentColor; Instance.new("UICorner", yB); yB.ZIndex = 201
-        local nB = Instance.new("TextButton", cF); nB.Size = UDim2now(0.5, -10, 0, 25); nB.Position = UDim2now(0.5, 5, 0, 30); nB.Text = "NO"; nB.BackgroundColor3 = Color3.new(0.4, 0, 0); Instance.new("UICorner", nB); nB.ZIndex = 201
+        local cF = Instance.new("Frame", SG); cF.Size = UDim2now(0, 300, 0, 100); cF.Position = UDim2now(0.5, -150, 0.5, -50); cF.BackgroundColor3 = Color3.new(0.1, 0.2, 0.1); Instance.new("UICorner", cF); cF.ZIndex = 200
+        local cT = Instance.new("TextLabel", cF); cT.Size = UDim2now(1, 0, 0, 40); cT.Text = "Use this configuration?"; cT.TextColor3 = Color3.new(1,1,1); cT.Font = Enum.Font.GothamBold; cT.BackgroundTransparency = 1; cT.TextSize = 14; cT.ZIndex = 201
+        local yB = Instance.new("TextButton", cF); yB.Size = UDim2now(0.5, -15, 0, 40); yB.Position = UDim2now(0, 10, 0, 50); yB.Text = "YES"; yB.BackgroundColor3 = AccentColor; Instance.new("UICorner", yB); yB.ZIndex = 201
+        local nB = Instance.new("TextButton", cF); nB.Size = UDim2now(0.5, -15, 0, 40); nB.Position = UDim2now(0.5, 5, 0, 50); nB.Text = "NO"; nB.BackgroundColor3 = Color3.new(0.4, 0, 0); Instance.new("UICorner", nB); nB.ZIndex = 201
         yB.MouseButton1Click:Connect(function()
             for k,v in pairs(res) do Settings[k] = v end; SaveConfig(); Line("Settings Applied. Re-Teleporting...", AccentColor); cF:Destroy(); task.wait(1); game:GetService("TeleportService"):Teleport(game.PlaceId)
         end)
         nB.MouseButton1Click:Connect(function() cF:Destroy() end)
     else Line("Failed to decode config code!", Color3.new(1,0,0)) end
 end)
+
 
 -- Dragging system
 local MainFrame = UI_Master.Elements.Main
