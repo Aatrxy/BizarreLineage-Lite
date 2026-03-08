@@ -994,15 +994,37 @@ end)
 
 local function SuperPersistence()
     local loader = [[
-        if not game:IsLoaded() then game.Loaded:Wait() end
-        task.wait(1)
-        print("[LiteExtreme] Auto-Reloading Engine...")
-        pcall(function() 
-            local src = readfile("LiteExtreme.lua") or readfile("message (22).txt")
-            if src then 
-                loadstring(src)() 
-                print("[LiteExtreme] Reload Complete!")
-            else warn("[LiteExtreme] Backup file not found!") end
+        task.spawn(function()
+            if not game:IsLoaded() then game.Loaded:Wait() end
+            task.wait(1.5)
+            warn("[LiteExtreme] Auto-Reloading Engine...")
+            
+            local s, src = pcall(function()
+                return game:HttpGet("https://raw.githubusercontent.com/Aatrxy/BizarreLineage-Lite/main/THE%20REAL.lua", true)
+            end)
+
+            if s and src and #src > 100 then
+                local func, err = loadstring(src)
+                if func then
+                    pcall(func)
+                    warn("[LiteExtreme] Cloud Reload Complete! UI should be active.")
+                else
+                    warn("[LiteExtreme] Cloud Syntax Error: ", err)
+                end
+            else
+                warn("[LiteExtreme] Cloud Fetch Failed. Falling back to local files...")
+                local success2, localSrc = pcall(function()
+                    if isfile("LiteExtreme_V43.lua") then return readfile("LiteExtreme_V43.lua") end
+                    if isfile("LiteExtreme.lua") then return readfile("LiteExtreme.lua") end
+                    return nil
+                end)
+                if success2 and localSrc then
+                    local f2, e2 = loadstring(localSrc)
+                    if f2 then pcall(f2) warn("[LiteExtreme] Local Reload Complete!") end
+                else
+                    warn("[LiteExtreme] CRITICAL: Backup file not found!")
+                end
+            end
         end)
     ]]
     
