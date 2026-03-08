@@ -21,6 +21,9 @@ local CoreGui = game:GetService('CoreGui')
 local Vector3now, Vector2now, CFramenow = Vector3.new, Vector2.new, CFrame.new
 local UDim2now, Color3now = UDim2.new, Color3.fromRGB
 local math_floor, math_clamp, math_rad = math.floor, math.clamp, math.rad
+local bc = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+local function base64_encode(data) return ((data:gsub('.', function(x) local r,b='',x:byte() for i=8,1,-1 do r=r..(b%2^i-b%2^(i-1)>0 and '1' or '0') end return r; end)..'0000'):gsub('%d%d%d?%d?%d?%d?', function(x) if (#x < 6) then return '' end local c=0 for i=1,6 do c=c+(x:sub(i,i)=='1' and 2^(6-i) or 0) end return bc:sub(c+1,c+1) end)..({ '', '==', '=' })[#data%3+1]) end
+local function base64_decode(data) data = string.gsub(data, '[^'..bc..'=]', '') return (data:gsub('.', function(x) if (x == '=') then return '' end local r,f='',bc:find(x)-1 for i=6,1,-1 do r=r..(f%2^i-f%2^(i-1)>0 and '1' or '0') end return r; end):gsub('%d%d%d?%d?%d?%d?%d?%d?', function(x) if (#x < 8) then return '' end local c=0 for i=1,8 do c=c+(x:sub(i,i)=='1' and 2^(8-i) or 0) end return string.char(c) end)) end
 
 local State = {
     TrueInstinct = false,
@@ -116,7 +119,7 @@ local WikiData = {
 local UI_Master = {Pages = {}, Buttons = {}, Elements = {}}
 function UI_Master:Init()
     local SG = Instance.new('ScreenGui', CoreGui); SG.Name = 'BizarreLiteExtreme_V43'; SG.IgnoreGuiInset = true; SG.ResetOnSpawn = false
-    local Main = Instance.new('Frame', SG)
+    local Main = Instance.new('CanvasGroup', SG)
     Main.Size = UDim2now(0, 980, 0, 680)
     Main.Position = UDim2now(0.5, -490, 0.5, -340)
     Main.BackgroundColor3 = DarkBg; Main.BackgroundTransparency = 0.08; Main.BorderSizePixel = 0
@@ -133,8 +136,15 @@ function UI_Master:Init()
     local SideDiv = Instance.new('Frame', Sidebar); SideDiv.Size = UDim2now(0, 2, 1, 0); SideDiv.Position = UDim2now(1, -2, 0, 0); SideDiv.BackgroundColor3 = AccentColor; SideDiv.BorderSizePixel = 0
 
     local Branding = Instance.new('Frame', Sidebar); Branding.Size = UDim2now(1, 0, 0, 72); Branding.BackgroundTransparency = 1
-    local BrandTitle = Instance.new('TextLabel', Branding); BrandTitle.Size = UDim2now(1, -20, 0, 28); BrandTitle.Position = UDim2now(0, 10, 0, 10); BrandTitle.Text = 'LITE EXTREME'; BrandTitle.TextColor3 = AccentColor; BrandTitle.Font = Enum.Font.GothamBold; BrandTitle.TextSize = 20; BrandTitle.TextXAlignment = 0; BrandTitle.BackgroundTransparency = 1
-    local BrandSub = Instance.new('TextLabel', Branding); BrandSub.Size = UDim2now(1, -20, 0, 14); BrandSub.Position = UDim2now(0, 10, 0, 40); BrandSub.Text = 'BIZARRE LINEAGE MOD'; BrandSub.TextColor3 = Color3.fromRGB(100, 160, 100); BrandSub.Font = Enum.Font.Gotham; BrandSub.TextSize = 11; BrandSub.TextXAlignment = 0; BrandSub.BackgroundTransparency = 1
+    local BrandTitle = Instance.new('TextLabel', Branding); BrandTitle.Size = UDim2now(1, -20, 0, 28); BrandTitle.Position = UDim2now(0, 10, 0, 10); BrandTitle.Text = 'THE REAL'; BrandTitle.TextColor3 = AccentColor; BrandTitle.Font = Enum.Font.GothamBold; BrandTitle.TextSize = 22; BrandTitle.TextXAlignment = 0; BrandTitle.BackgroundTransparency = 1
+    local BrandLink = Instance.new('TextButton', Branding); BrandLink.Size = UDim2now(1, -20, 0, 14); BrandLink.Position = UDim2now(0, 10, 0, 40); BrandLink.Text = 'https://discord.gg/6AE5zUQB'; BrandLink.TextColor3 = Color3.fromRGB(120, 200, 120); BrandLink.Format = Enum.Font.Gotham; BrandLink.TextSize = 10; BrandLink.TextXAlignment = 0; BrandLink.BackgroundTransparency = 1; BrandLink.Font = Enum.Font.Gotham; BrandLink.TextWrapped = true
+
+    BrandLink.MouseButton1Click:Connect(function()
+        setclipboard('https://discord.gg/6AE5zUQB')
+        BrandLink.Text = "COPIED TO CLIPBOARD!"
+        task.wait(2)
+        BrandLink.Text = 'https://discord.gg/6AE5zUQB'
+    end)
 
     -- Tab scroll container (so tabs never get cut off)
     local TabScroll = Instance.new('ScrollingFrame', Sidebar)
@@ -169,7 +179,7 @@ function UI_Master:Init()
     TopBar.BackgroundColor3 = Color3.fromRGB(6, 16, 8); TopBar.BackgroundTransparency = 0.1; TopBar.BorderSizePixel = 0
 
     local Title = Instance.new('TextLabel', TopBar); Title.Size = UDim2now(0, 300, 1, 0); Title.Position = UDim2now(0, 20, 0, 0); Title.Text = 'BIZARRE LINEAGE'; Title.TextColor3 = Color3.new(1,1,1); Title.Font = Enum.Font.GothamBold; Title.TextSize = 22; Title.BackgroundTransparency = 1; Title.TextXAlignment = 0
-    local SubTitle = Instance.new('TextLabel', TopBar); SubTitle.Size = UDim2now(0, 300, 0, 14); SubTitle.Position = UDim2now(0, 22, 0, 34); SubTitle.Text = 'LITE EXTREME V43'; SubTitle.TextColor3 = Color3.fromRGB(80,160,80); SubTitle.Font = Enum.Font.Gotham; SubTitle.TextSize = 11; SubTitle.BackgroundTransparency = 1; SubTitle.TextXAlignment = 0
+    local SubTitle = Instance.new('TextLabel', TopBar); SubTitle.Size = UDim2now(0, 300, 0, 14); SubTitle.Position = UDim2now(0, 22, 0, 34); SubTitle.Text = 'THE REAL INTERNAL'; SubTitle.TextColor3 = Color3.fromRGB(80,160,80); SubTitle.Font = Enum.Font.Gotham; SubTitle.TextSize = 11; SubTitle.BackgroundTransparency = 1; SubTitle.TextXAlignment = 0
 
     local StatusBox = Instance.new('Frame', TopBar); StatusBox.Size = UDim2now(0, 120, 0, 38); StatusBox.Position = UDim2now(1, -140, 0.5, -19); StatusBox.BackgroundColor3 = Color3.fromRGB(10, 30, 15); StatusBox.BackgroundTransparency = 0.3; Instance.new('UICorner', StatusBox).CornerRadius = UDim.new(0, 6)
     local fpsL = Instance.new('TextLabel', StatusBox); fpsL.Size = UDim2now(1, 0, 1, 0); fpsL.Text = 'FPS: 0'; fpsL.TextColor3 = AccentColor; fpsL.Font = Enum.Font.GothamBold; fpsL.TextSize = 13; fpsL.BackgroundTransparency = 1
@@ -232,14 +242,30 @@ function UI_Master:Init()
     local BBFill = Instance.new('Frame', BBBg); BBFill.Name = 'Fill'; BBFill.Size = UDim2now(1, 0, 1, 0); BBFill.BackgroundColor3 = Color3.fromRGB(200, 50, 50); BBFill.BorderSizePixel = 0; BBFill.ZIndex = 202; Instance.new('UICorner', BBFill).CornerRadius = UDim.new(1, 0)
     local BBText = Instance.new('TextLabel', BBBg); BBText.Name = 'HPText'; BBText.Size = UDim2now(1, 0, 1, 0); BBText.Text = '0/0'; BBText.TextColor3 = Color3.new(1,1,1); BBText.Font = Enum.Font.GothamBold; BBText.TextSize = 11; BBText.BackgroundTransparency = 1; BBText.ZIndex = 203
 
-    -- Play Again notification banner
-    local PlayAgainBanner = Instance.new('Frame', SG); PlayAgainBanner.Name = 'PlayAgainBanner'; PlayAgainBanner.Size = UDim2now(0, 340, 0, 44); PlayAgainBanner.Position = UDim2now(0.5, -170, 1, -60); PlayAgainBanner.BackgroundColor3 = Color3.fromRGB(0, 60, 20); PlayAgainBanner.BackgroundTransparency = 0.2; PlayAgainBanner.Visible = false; PlayAgainBanner.ZIndex = 200; PlayAgainBanner.BorderSizePixel = 0
+    -- Play Again notification banner (styled like Boss HP Bar)
+    local PlayAgainBanner = Instance.new('Frame', SG); PlayAgainBanner.Name = 'PlayAgainBanner'; PlayAgainBanner.Size = UDim2now(0, 500, 0, 52); PlayAgainBanner.Position = UDim2now(0.5, -250, 0, 8); PlayAgainBanner.BackgroundColor3 = Color3.fromRGB(8, 20, 12); PlayAgainBanner.BackgroundTransparency = 0.15; PlayAgainBanner.Visible = false; PlayAgainBanner.ZIndex = 200; PlayAgainBanner.BorderSizePixel = 0
     Instance.new('UICorner', PlayAgainBanner).CornerRadius = UDim.new(0, 8)
     Instance.new('UIStroke', PlayAgainBanner).Color = AccentColor
-    local PALabel = Instance.new('TextLabel', PlayAgainBanner); PALabel.Size = UDim2now(1, 0, 1, 0); PALabel.Text = '✔ RAID COMPLETE – Clicking Play Again...'; PALabel.TextColor3 = AccentColor; PALabel.Font = Enum.Font.GothamBold; PALabel.TextSize = 13; PALabel.BackgroundTransparency = 1; PALabel.ZIndex = 201
+    local PALabel = Instance.new('TextLabel', PlayAgainBanner); PALabel.Size = UDim2now(1, 0, 1, 0); PALabel.Text = 'BOSS DEFEATED! | CLICKING PLAY AGAIN...'; PALabel.TextColor3 = AccentColor; PALabel.Font = Enum.Font.GothamBold; PALabel.TextSize = 16; PALabel.BackgroundTransparency = 1; PALabel.ZIndex = 201
+
 
     self.Elements = {Main=Main, Sidebar=Sidebar, Content=Content, FPS=fpsL, ItemList=iList, ItemPanel=ItemPanel, Popup=PopupOverlay, PopImg=PopImg, PopTitle=PopTitle, PopDesc=PopDesc, PT=playT, YT=yenT, TY=totalYen, Guard=GuardLabel, GuardZone=GuardZone, BossBar=BossBar, BBName=BBName, BBFill=BBFill, BBText=BBText, PlayAgainBanner=PlayAgainBanner}
-    ItemPanel.Visible = Settings.ShowMapItems
+    ItemPanel.Visible = Settings.ShowItemPanel or false
+    
+    UIS.InputBegan:Connect(function(io, busy)
+        if busy then return end
+        if io.KeyCode == Enum.KeyCode[Settings.MenuKey] then
+            Main.Visible = not Main.Visible
+        elseif io.KeyCode == Enum.KeyCode[Settings.MasterKey] then
+            Settings.EngineActive = not Settings.EngineActive
+            local active = Settings.EngineActive
+            Tween:Create(Main, TweenInfo.new(0.4, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {
+                GroupTransparency = active and (Settings.UITransparency/100) or 1
+            }):Play()
+            local vis = workspace:FindFirstChild("LiteExtreme_Visualizer")
+            if vis then vis.Transparency = active and 0.8 or 1 end
+        end
+    end)
 end
 
 function UI_Master:AddTab(name, index, icon)
@@ -307,11 +333,11 @@ function UI_Master:AddToggle(page, label, key, tooltip, callback)
     end)
 end
 
-function UI_Master:AddSlider(page, label, key, min, max, sfx)
+function UI_Master:AddSlider(page, label, key, min, max, sfx, prec)
     local val = Settings[key] or min
     local f = Instance.new("Frame", page); f.Size = UDim2now(1, -10, 0, 55); f.BackgroundColor3 = Color3now(15, 20, 15); f.BackgroundTransparency = 0.6; Instance.new("UICorner", f); Instance.new("UIStroke", f).Color = Color3now(30, 40, 30)
-    local t = Instance.new("TextLabel", f); t.Size = UDim2now(1, -20, 0, 20); t.Position = UDim2now(0, 10, 0, 5); t.Text = label .. ": " .. tostring(val) .. (sfx or ""); t.TextColor3 = Color3.new(0.9,0.9,0.9); t.Font = Enum.Font.GothamBold; t.TextSize = 13; t.TextXAlignment = 0; t.BackgroundTransparency = 1
-    local bg = Instance.new("Frame", f); bg.Size = UDim2now(1, -20, 0, 6); bg.Position = UDim2now(0, 10, 0, 35); bg.BackgroundColor3 = Color3now(30, 35, 30); Instance.new("UICorner", bg).CornerRadius = UDim.new(1, 0)
+    local t = Instance.new("TextLabel", f); t.Size = UDim2now(1, -20, 0, 20); t.Position = UDim2now(0, 10, 0, 5); t.Text = label .. ": " .. string.format("%."..(prec or 0).."f", val) .. (sfx or ""); t.TextColor3 = Color3.new(0.9,0.9,0.9); t.Font = Enum.Font.GothamBold; t.TextSize = 13; t.TextXAlignment = 0; t.BackgroundTransparency = 1
+    local bg = Instance.new("Frame", f); bg.Size = UDim2now(1, -20, 0, 6); bg.Position = UDim2now(0,10, 0, 35); bg.BackgroundColor3 = Color3now(30, 35, 30); Instance.new("UICorner", bg).CornerRadius = UDim.new(1, 0)
     local pctI = math_clamp((val-min)/(max-min), 0, 1)
     local fl = Instance.new("Frame", bg); fl.Size = UDim2now(pctI, 0, 1, 0); fl.BackgroundColor3 = AccentColor; Instance.new("UICorner", fl).CornerRadius = UDim.new(1, 0)
     local knob = Instance.new("Frame", fl); knob.Size = UDim2now(0, 14, 0, 14); knob.Position = UDim2now(1, -7, 0.5, -7); knob.BackgroundColor3 = Color3.new(1,1,1); Instance.new("UICorner", knob).CornerRadius = UDim.new(1, 0)
@@ -319,7 +345,22 @@ function UI_Master:AddSlider(page, label, key, min, max, sfx)
     local md = false
     kb.InputBegan:Connect(function(io) if io.UserInputType == Enum.UserInputType.MouseButton1 then md = true; Tween:Create(knob, TweenInfo.new(0.1), {Size=UDim2now(0,18,0,18), Position=UDim2now(1,-9,0.5,-9)}):Play() end end)
     UIS.InputEnded:Connect(function(io) if io.UserInputType == Enum.UserInputType.MouseButton1 then md = false; Tween:Create(knob, TweenInfo.new(0.1), {Size=UDim2now(0,14,0,14), Position=UDim2now(1,-7,0.5,-7)}):Play() end end)
-    UIS.InputChanged:Connect(function(io) if md and io.UserInputType == Enum.UserInputType.MouseMovement then local pct = math_clamp((io.Position.X - bg.AbsolutePosition.X) / bg.AbsoluteSize.X, 0, 1); Settings[key] = math_floor(min + ((max - min) * pct)); t.Text = label .. ": " .. Settings[key] .. (sfx or ""); fl.Size = UDim2now(pct, 0, 1, 0) end end)
+    UIS.InputChanged:Connect(function(io) 
+        if md and io.UserInputType == Enum.UserInputType.MouseMovement then 
+            local pct = math_clamp((io.Position.X - bg.AbsolutePosition.X) / bg.AbsoluteSize.X, 0, 1)
+            local rawVal = min + ((max - min) * pct)
+            if prec and prec > 0 then
+                Settings[key] = tonumber(string.format("%."..prec.."f", rawVal))
+            else
+                Settings[key] = math_floor(rawVal)
+            end
+            t.Text = label .. ": " .. string.format("%."..(prec or 0).."f", Settings[key]) .. (sfx or "")
+            fl.Size = UDim2now(pct, 0, 1, 0)
+            if key == "UITransparency" and self.Elements.Main then
+                self.Elements.Main.GroupTransparency = Settings[key] / 100
+            end
+        end 
+    end)
 end
 
 function UI_Master:AddDropdown(page, label, key, options)
@@ -465,9 +506,6 @@ end
 -- Dashboard
 local pgD = UI_Master.Pages.Dashboard
 UI_Master:AddToggle(pgD, "True Instinct", "AutoRoka", "Automatically uses Rokakaka if stand is not desired.")
-UI_Master:AddToggle(pgD, "Map Items Panel", "ShowItemPanel", "Toggle the right side panel visibility", function(s)
-    UI_Master.Elements.ItemPanel.Visible = s
-end)
 local logF = Instance.new("ScrollingFrame", pgD); logF.Size = UDim2.new(1, -10, 0, 200); logF.BackgroundColor3 = Color3.fromRGB(15, 20, 15); logF.BackgroundTransparency = 0.5; logF.BorderSizePixel = 0; logF.ScrollBarThickness = 2; logF.AutomaticCanvasSize = Enum.AutomaticSize.Y; Instance.new("UICorner", logF).CornerRadius = UDim.new(0, 4); local lt = Instance.new("Frame", logF); lt.Size = UDim2.new(1, -20, 1, -20); lt.Position = UDim2.new(0, 10, 0, 10); lt.BackgroundTransparency = 1; Instance.new("UIListLayout", lt).Padding = UDim.new(0, 4)
 local function Line(t, c) local l = Instance.new("TextLabel", lt); l.Size = UDim2.new(1, 0, 0, 18); l.Text = t; l.TextColor3 = c or Color3.fromRGB(200, 200, 200); l.Font = Enum.Font.Code; l.TextSize = 11; l.TextXAlignment = 0; l.BackgroundTransparency = 1 end
 Line("Lite Extreme v43 Loaded.", AccentColor)
@@ -477,8 +515,8 @@ Line("Features Cleaned & Re-Organized.", Color3.new(0.5, 1, 0.5))
 local pgC = UI_Master.Pages.Combat
 UI_Master:AddToggle(pgC, "Auto M1", "AutoM1", "Auto Left Click continuously")
 UI_Master:AddToggle(pgC, "God Mode", "GodModeActive", "Attempts to loop dodge I-frames")
-UI_Master:AddSlider(pgC, "Click Speed (Hold)", "ClickSpeed", 0.005, 0.1, "s")
-UI_Master:AddSlider(pgC, "Attack Interval", "MacroInterval", 0.01, 1, "s")
+UI_Master:AddSlider(pgC, "Click Speed (Hold)", "ClickSpeed", 0.001, 0.05, "s", 3)
+UI_Master:AddSlider(pgC, "Attack Interval", "MacroInterval", 0.001, 0.5, "s", 3)
 
 -- Skills (New Tab to decrease clutter)
 local pgSkills = UI_Master.Pages.Skills
@@ -495,13 +533,20 @@ UI_Master:AddToggle(pgESP, "NPC ESP (Yellow)", "NPC_ESP")
 UI_Master:AddToggle(pgESP, "Boss ESP (Red)", "Boss_ESP")
 UI_Master:AddToggle(pgESP, "Player ESP (Green)", "Player_ESP")
 UI_Master:AddToggle(pgESP, "Item ESP (Light Green)", "Item_ESP")
-UI_Master:AddToggle(pgESP, "Nearby Item Scanning", "ShowMapItems", "Calculates and lists nearby items")
+UI_Master:AddToggle(pgESP, "Map Items Panel", "ShowItemPanel", "Toggle visibility of the right side panel", function(s)
+    UI_Master.Elements.ItemPanel.Visible = s
+end)
 UI_Master:AddToggle(pgESP, "Hitbox Visualizer", "VisualizerActive", "Shows the scanning range sphere")
 
 -- Farming
 local pgF = UI_Master.Pages.Farming
-UI_Master:AddToggle(pgF, "Auto Farm", "AutoFarm", "Farm NPCs/Bosses around you")
+UI_Master:AddToggle(pgF, "Auto Farm", "AutoFarm", "Farm NPCs/Bosses around you", function(s)
+    Settings.AutoM1 = s
+end)
 UI_Master:AddToggle(pgF, "Attack Bosses Only", "FarmOnlyBoss")
+UI_Master:AddToggle(pgF, "Advanced Scan (Deeper)", "AdvancedScan", "Scans more objects (May cause FPS drops!)")
+local fWarn = Instance.new("TextLabel", pgF); fWarn.Size = UDim2now(1, -10, 0, 30); fWarn.Text = "⚠️ ADVANCED SCAN: RECOMMENDED FOR BEST ITEM DETECTION"; fWarn.TextColor3 = Color3.fromRGB(255, 100, 100); fWarn.Font = Enum.Font.GothamBold; fWarn.TextSize = 10; fWarn.BackgroundTransparency = 1; fWarn.TextWrapped = true
+UI_Master:AddSlider(pgF, "Scan Interval", "ScanInterval", 0.1, 5, "s", 1)
 UI_Master:AddDropdown(pgF, "Attack Angle", "FarmAngle", {"Below (Default)", "Above", "Behind", "Front", "Right", "Left"})
 UI_Master:AddSlider(pgF, "Attack Distance", "FarmDist", 0, 15)
 UI_Master:AddSlider(pgF, "Max Scan Range", "TargetRange", 10, 500)
@@ -729,6 +774,35 @@ end)
 
 UI_Master:AddSlider(pgS, "UI Transparency", "UITransparency", 0, 80, "%")
 
+local confFrame = Instance.new("Frame", pgS); confFrame.Size = UDim2now(1, -10, 0, 140); confFrame.Position = UDim2now(0, 5, 0, 280); confFrame.BackgroundTransparency = 1; Instance.new("UIListLayout", confFrame).Padding = UDim.new(0, 6)
+local function PrefBtn(txt, cb) 
+    local b = Instance.new("TextButton", confFrame); b.Size = UDim2now(1, 0, 0, 34); b.Text = txt; b.BackgroundColor3 = SecondaryGreen; b.TextColor3 = Color3.new(1,1,1); b.Font = Enum.Font.GothamBold; b.TextSize = 13; b.AutoButtonColor = true; Instance.new("UICorner", b)
+    b.MouseButton1Click:Connect(cb) 
+end
+
+PrefBtn("EXPORT CONFIG (CODE)", function()
+    local enc = base64_encode(Http:JSONEncode(Settings))
+    setclipboard(enc)
+    Line("Config code copied! Share it with friends.", AccentColor)
+end)
+
+PrefBtn("IMPORT CONFIG (PASTE CODE)", function()
+    local input = getclipboard()
+    if not input or #input < 20 then Line("Empty or invalid clipboard!", Color3.new(1,0,0)) return end
+    local s, res = pcall(function() return Http:JSONDecode(base64_decode(input)) end)
+    if s and type(res) == "table" then
+        Line("VALID CONFIG DETECTED", AccentColor)
+        local cF = Instance.new("Frame", pgS); cF.Size = UDim2now(1, -10, 0, 60); cF.BackgroundColor3 = Color3.new(0.2, 0.4, 0.2); Instance.new("UICorner", cF); cF.Position = UDim2now(0, 5, 0, 30); cF.ZIndex = 200
+        local cT = Instance.new("TextLabel", cF); cT.Size = UDim2now(1, 0, 0, 30); cT.Text = "Use this configuration?"; cT.TextColor3 = Color3.new(1,1,1); cT.Font = Enum.Font.GothamBold; cT.BackgroundTransparency = 1; cT.TextSize = 14; cT.ZIndex = 201
+        local yB = Instance.new("TextButton", cF); yB.Size = UDim2now(0.5, -10, 0, 25); yB.Position = UDim2now(0, 5, 0, 30); yB.Text = "YES"; yB.BackgroundColor3 = AccentColor; Instance.new("UICorner", yB); yB.ZIndex = 201
+        local nB = Instance.new("TextButton", cF); nB.Size = UDim2now(0.5, -10, 0, 25); nB.Position = UDim2now(0.5, 5, 0, 30); nB.Text = "NO"; nB.BackgroundColor3 = Color3.new(0.4, 0, 0); Instance.new("UICorner", nB); nB.ZIndex = 201
+        yB.MouseButton1Click:Connect(function()
+            for k,v in pairs(res) do Settings[k] = v end; SaveConfig(); Line("Settings Applied. Re-Teleporting...", AccentColor); cF:Destroy(); task.wait(1); game:GetService("TeleportService"):Teleport(game.PlaceId)
+        end)
+        nB.MouseButton1Click:Connect(function() cF:Destroy() end)
+    else Line("Failed to decode config code!", Color3.new(1,0,0)) end
+end)
+
 -- Dragging system
 local MainFrame = UI_Master.Elements.Main
 local dragging, dragInput, dragStart, startPos = false, nil, nil, nil
@@ -760,6 +834,12 @@ UIS.InputBegan:Connect(function(inp, gp)
             MainFrame.Visible = not MainFrame.Visible
         elseif keyName == Settings.MasterKey then
             Settings.EngineActive = not Settings.EngineActive
+            local active = Settings.EngineActive
+            Tween:Create(MainFrame, TweenInfo.new(0.4, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {
+                GroupTransparency = active and (Settings.UITransparency/100) or 1
+            }):Play()
+            local vis = workspace:FindFirstChild("LiteExtreme_Visualizer")
+            if vis then vis.Transparency = active and 0.8 or 1 end
             UpdateGuardUI()
             Snd()
         end
@@ -1047,22 +1127,28 @@ task.spawn(function()
             end)
         end
         
-        -- Auto Stand: summon stand via Tab key if not present
+        -- Auto Stand: summon stand via Tab key if not present (SMART CHECK)
         if Settings.AutoStand and Settings.EngineActive then
             pcall(function()
                 local standName = Client.Name .. "'s Stand"
-                local hasStand = workspace:FindFirstChild(standName, true) ~= nil
+                local hasStand = false
+                if workspace:FindFirstChild(standName, true) then hasStand = true end
                 if not hasStand and Client.Character then
-                    -- Check directly parented to character as well
                     hasStand = Client.Character:FindFirstChild("Stand", true) ~= nil
                 end
                 if not hasStand then
+                    for _, v in ipairs(workspace:GetChildren()) do
+                        if v:IsA("Model") and v.Name:find("Stand") and v:FindFirstChild("Owner") and v.Owner.Value == Client then hasStand = true break end
+                    end
+                end
+                
+                if not hasStand then
                     VIM:SendKeyEvent(true, Enum.KeyCode.Tab, false, game)
-                    task.wait(0.05)
+                    task.wait(0.1)
                     VIM:SendKeyEvent(false, Enum.KeyCode.Tab, false, game)
+                    task.wait(2) -- Cooldown to let stand appear
                 end
             end)
-            task.wait(1.5) -- only check every ~2s to avoid spamming Tab
         end
     end
 end)
