@@ -75,9 +75,10 @@ local function SaveConfig()
     if not s then warn("[LiteExtreme] Save config failed:", err) end
 end
 
-local AccentColor = Color3now(0, 200, 255)
-local SecondaryGreen = Color3now(15, 45, 60)
-local DarkBg = Color3now(8, 8, 10)
+local AccentColor = Color3now(255, 120, 0)
+local SecondaryGreen = Color3now(40, 40, 45)
+local DarkBg = Color3now(10, 10, 12)
+
 
 
 local WikiData = {
@@ -129,10 +130,12 @@ function UI_Master:Init()
     local SG = Instance.new('ScreenGui', CoreGui); SG.Name = 'BizarreLiteExtreme_V43'; SG.IgnoreGuiInset = true; SG.ResetOnSpawn = false
     local Main = Instance.new('CanvasGroup', SG)
     Main.Size = UDim2now(0, 980, 0, 680)
-    Main.Position = UDim2now(0.5, -490, 0.5, -340)
-    Main.BackgroundColor3 = DarkBg; Main.BackgroundTransparency = 0.08; Main.BorderSizePixel = 0
+    Main.Position = UDim2now(0.5, -490, 0.5, -300) -- Slightly lower for reveal
+    Main.BackgroundColor3 = DarkBg; Main.BackgroundTransparency = 0.05; Main.BorderSizePixel = 0
+    Main.GroupTransparency = 1
     Instance.new('UICorner', Main).CornerRadius = UDim.new(0, 10)
     Instance.new('UIStroke', Main).Color = AccentColor
+
 
     -- Sidebar (fixed width, uses UIListLayout so tabs never overlap)
     local Sidebar = Instance.new('Frame', Main)
@@ -150,14 +153,24 @@ function UI_Master:Init()
     Instance.new("UICorner", BrandLink).CornerRadius = UDim.new(0, 4)
     Instance.new("UIStroke", BrandLink).Color = Color3.fromRGB(40, 80, 40)
 
+    -- Subtle Branding Animation (Shine)
+    local Shine = Instance.new("Frame", Branding); Shine.Size = UDim2now(0, 50, 1, 0); Shine.Position = UDim2now(-0.5, 0, 0, 0); Shine.BackgroundColor3 = Color3.new(1,1,1); Shine.BackgroundTransparency = 0.9; Shine.Rotation = 15; Shine.BorderSizePixel = 0
+    task.spawn(function()
+        while task.wait(5) do
+            Shine.Position = UDim2now(-0.5, 0, 0, 0)
+            Tween:Create(Shine, TweenInfo.new(1.5, Enum.EasingStyle.Quart), {Position = UDim2now(1.5, 0, 0, 0)}):Play()
+        end
+    end)
+
     BrandLink.MouseButton1Click:Connect(function()
         setClipboard('https://discord.gg/6AE5zUQB')
         BrandLink.Text = "COPIED!"
         BrandLink.TextColor3 = Color3.new(1,1,1)
         task.wait(1.5)
         BrandLink.Text = 'discord.gg/6AE5zUQB'
-        BrandLink.TextColor3 = Color3.fromRGB(150, 255, 150)
+        BrandLink.TextColor3 = Color3.fromRGB(240, 200, 150)
     end)
+
 
     -- Tab scroll container (so tabs never get cut off)
     local TabScroll = Instance.new('ScrollingFrame', Sidebar)
@@ -187,12 +200,8 @@ function UI_Master:Init()
 
 
     -- Top bar
-    local TopBar = Instance.new('Frame', Main)
-    TopBar.Size = UDim2now(1, -210, 0, 58)
-    TopBar.Position = UDim2now(0, 210, 0, 0)
-    TopBar.BackgroundColor3 = Color3.fromRGB(6, 16, 8); TopBar.BackgroundTransparency = 0.1; TopBar.BorderSizePixel = 0
+    local Title = Instance.new('TextLabel', TopBar); Title.Size = UDim2now(0, 500, 1, 0); Title.Position = UDim2now(0, 20, 0, 0); Title.Text = 'BIZARRE LINEAGE'; Title.TextColor3 = Color3.new(1,1,1); Title.Font = Enum.Font.GothamBold; Title.TextSize = 32; Title.BackgroundTransparency = 1; Title.TextXAlignment = 0
 
-    local Title = Instance.new('TextLabel', TopBar); Title.Size = UDim2now(0, 400, 1, 0); Title.Position = UDim2now(0, 20, 0, 0); Title.Text = 'BIZARRE LINEAGE'; Title.TextColor3 = Color3.new(1,1,1); Title.Font = Enum.Font.GothamBold; Title.TextSize = 28; Title.BackgroundTransparency = 1; Title.TextXAlignment = 0
 
 
     local StatusBox = Instance.new('Frame', TopBar); StatusBox.Size = UDim2now(0, 120, 0, 38); StatusBox.Position = UDim2now(1, -140, 0.5, -19); StatusBox.BackgroundColor3 = Color3.fromRGB(10, 30, 15); StatusBox.BackgroundTransparency = 0.3; Instance.new('UICorner', StatusBox).CornerRadius = UDim.new(0, 6)
@@ -264,8 +273,17 @@ function UI_Master:Init()
     local PALabel = Instance.new('TextLabel', PlayAgainBanner); PALabel.Size = UDim2now(1, 0, 1, 0); PALabel.Text = 'BOSS DEFEATED! | CLICKING PLAY AGAIN...'; PALabel.TextColor3 = AccentColor; PALabel.Font = Enum.Font.GothamBold; PALabel.TextSize = 16; PALabel.BackgroundTransparency = 1; PALabel.ZIndex = 201
 
 
-    self.Elements = {Main=Main, Sidebar=Sidebar, Content=Content, FPS=fpsL, ItemList=iList, ItemPanel=ItemPanel, Popup=PopupOverlay, PopImg=PopImg, PopTitle=PopTitle, PopDesc=PopDesc, PT=playT, YT=yenT, TY=totalYen, Guard=GuardLabel, GuardZone=GuardZone, BossBar=BossBar, BBName=BBName, BBFill=BBFill, BBText=BBText, PlayAgainBanner=PlayAgainBanner}
+    -- Correctly populate self.Elements without overwriting existing data
+    local e = self.Elements
+    e.Main=Main; e.Sidebar=Sidebar; e.Content=Content; e.FPS=fpsL; e.ItemList=iList; e.ItemPanel=ItemPanel; e.Popup=PopupOverlay; e.PopImg=PopImg; e.PopTitle=PopTitle; e.PopDesc=PopDesc; e.PT=playT; e.YT=yenT; e.TY=totalYen; e.Guard=GuardLabel; e.GuardZone=GuardZone; e.BossBar=BossBar; e.BBName=BBName; e.BBFill=BBFill; e.BBText=BBText; e.PlayAgainBanner=PlayAgainBanner
+    
     ItemPanel.Visible = Settings.ShowItemPanel or false
+
+    -- STARTUP ANIMATION
+    task.spawn(function()
+        Tween:Create(Main, TweenInfo.new(0.8, Enum.EasingStyle.Back), {Position = UDim2now(0.5, -490, 0.5, -340), GroupTransparency = (Settings.UITransparency or 0)/100}):Play()
+    end)
+
     
     UIS.InputBegan:Connect(function(io, busy)
         if busy then return end
@@ -305,7 +323,7 @@ function UI_Master:AddTab(name, index, icon)
     b.MouseButton1Click:Connect(function() self:Switch(name) end)
     self.Buttons[name] = b
     
-    local p = Instance.new('CanvasGroup', self.Elements.Content)
+    local p = Instance.new('Frame', self.Elements.Content)
     p.Name = name .. '_Page'
     p.Size = UDim2now(1, 0, 1, 0); p.BackgroundTransparency = 1; p.Visible = false;
     
@@ -319,12 +337,15 @@ function UI_Master:AddTab(name, index, icon)
 end
 
 
+
 function UI_Master:Switch(name)
     for k, v in pairs(self.Pages) do
         if k == name then
             v.Visible = true
-            v.GroupTransparency = 1
-            Tween:Create(v, TweenInfo.new(0.4), {GroupTransparency = 0}):Play()
+            -- Subtle pop animation for the page
+            v.Size = UDim2now(1, 10, 1, 10)
+            v.Position = UDim2now(0, -5, 0, -5)
+            Tween:Create(v, TweenInfo.new(0.3, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Size = UDim2now(1,0,1,0), Position = UDim2now(0,0,0,0)}):Play()
         else
             v.Visible = false
         end
@@ -332,13 +353,14 @@ function UI_Master:Switch(name)
     for k, v in pairs(self.Buttons) do
         local act = (k == name)
         Tween:Create(v, TweenInfo.new(0.3), {
-            BackgroundColor3 = act and SecondaryGreen or Color3now(15, 30, 20),
-            BackgroundTransparency = act and 0.2 or 0.6,
-            TextColor3 = act and AccentColor or Color3now(120, 150, 120)
+            BackgroundColor3 = act and AccentColor or Color3now(15, 30, 20),
+            BackgroundTransparency = act and 0.1 or 0.6,
+            TextColor3 = act and Color3now(255, 255, 255) or Color3now(150, 150, 150)
         }):Play()
     end
     self.Elements.Popup.Visible = false
 end
+
 
 
 function UI_Master:AddToggle(page, label, key, tooltip, callback)
@@ -366,17 +388,27 @@ function UI_Master:AddToggle(page, label, key, tooltip, callback)
 
     local b = Instance.new("TextButton", f); b.Size = UDim2now(0, 40, 0, 20); b.Position = UDim2now(0, 10, 0.5, -10); b.BackgroundColor3 = state and AccentColor or Color3now(30, 35, 30); b.Text = ""; Instance.new("UICorner", b).CornerRadius = UDim.new(1, 0)
     local i = Instance.new("Frame", b); i.Size = UDim2now(0, 16, 0, 16); i.Position = UDim2now(state and 1 or 0, state and -18 or 2, 0.5, -8); i.BackgroundColor3 = Color3.new(1, 1, 1); Instance.new("UICorner", i).CornerRadius = UDim.new(1, 0)
+    local str = Instance.new("UIStroke", b); str.Color = AccentColor; str.Transparency = 1; str.Thickness = 2
     b.MouseButton1Click:Connect(function() 
         Settings[key] = not Settings[key]
         local s = Settings[key]
-        Tween:Create(b, TweenInfo.new(0.3, Enum.EasingStyle.Quart), {BackgroundColor3 = s and AccentColor or Color3now(30, 35, 30)}):Play()
-        Tween:Create(i, TweenInfo.new(0.3, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {Position = UDim2now(s and 1 or 0, s and -18 or 2, 0.5, -8)}):Play()
+        local info = TweenInfo.new(0.4, Enum.EasingStyle.Quart, Enum.EasingDirection.Out)
+        Tween:Create(b, info, {BackgroundColor3 = s and AccentColor or Color3now(30, 35, 30)}):Play()
+        Tween:Create(i, info, {Position = UDim2now(s and 1 or 0, s and -18 or 2, 0.5, -8)}):Play()
+        Tween:Create(str, info, {Transparency = s and 0.5 or 1}):Play()
         if callback then callback(s) end
     end)
     
-    f.MouseEnter:Connect(function() Tween:Create(f, TweenInfo.new(0.2), {BackgroundColor3 = Color3now(25, 35, 30), BackgroundTransparency = 0.4}):Play() end)
-    f.MouseLeave:Connect(function() Tween:Create(f, TweenInfo.new(0.2), {BackgroundColor3 = Color3now(15, 20, 15), BackgroundTransparency = 0.6}):Play() end)
+    f.MouseEnter:Connect(function() 
+        Tween:Create(f, TweenInfo.new(0.2), {BackgroundColor3 = Color3now(25, 25, 28), BackgroundTransparency = 0.4}):Play() 
+        if Settings[key] then Tween:Create(str, TweenInfo.new(0.3), {Transparency = 0}):Play() end
+    end)
+    f.MouseLeave:Connect(function() 
+        Tween:Create(f, TweenInfo.new(0.2), {BackgroundColor3 = Color3now(10, 10, 12), BackgroundTransparency = 0.6}):Play() 
+        if Settings[key] then Tween:Create(str, TweenInfo.new(0.3), {Transparency = 0.5}):Play() end
+    end)
 end
+
 
 
 function UI_Master:AddSlider(page, label, key, min, max, sfx, prec)
@@ -386,11 +418,24 @@ function UI_Master:AddSlider(page, label, key, min, max, sfx, prec)
     local bg = Instance.new("Frame", f); bg.Size = UDim2now(1, -20, 0, 6); bg.Position = UDim2now(0,10, 0, 35); bg.BackgroundColor3 = Color3now(30, 35, 30); Instance.new("UICorner", bg).CornerRadius = UDim.new(1, 0)
     local pctI = math_clamp((val-min)/(max-min), 0, 1)
     local fl = Instance.new("Frame", bg); fl.Size = UDim2now(pctI, 0, 1, 0); fl.BackgroundColor3 = AccentColor; Instance.new("UICorner", fl).CornerRadius = UDim.new(1, 0)
-    local knob = Instance.new("Frame", fl); knob.Size = UDim2now(0, 14, 0, 14); knob.Position = UDim2now(1, -7, 0.5, -7); knob.BackgroundColor3 = Color3.new(1,1,1); Instance.new("UICorner", knob).CornerRadius = UDim.new(1, 0)
+    local knob = Instance.new("Frame", fl); knob.Size = UDim2now(0, 14, 0, 14); knob.Position = UDim2now(1, -7, 0.5, -7); knob.BackgroundColor3 = Color3.fromRGB(200, 200, 200); Instance.new("UICorner", knob).CornerRadius = UDim.new(1, 0)
+    local knobStroke = Instance.new("UIStroke", knob); knobStroke.Color = AccentColor; knobStroke.Transparency = 1; knobStroke.Thickness = 2
     local kb = Instance.new("TextButton", f); kb.Size = UDim2now(1, -20, 0, 30); kb.Position = UDim2now(0, 10, 0, 20); kb.BackgroundTransparency = 1; kb.Text = ""
     local md = false
-    kb.InputBegan:Connect(function(io) if io.UserInputType == Enum.UserInputType.MouseButton1 then md = true; Tween:Create(knob, TweenInfo.new(0.1), {Size=UDim2now(0,18,0,18), Position=UDim2now(1,-9,0.5,-9)}):Play() end end)
-    UIS.InputEnded:Connect(function(io) if io.UserInputType == Enum.UserInputType.MouseButton1 then md = false; Tween:Create(knob, TweenInfo.new(0.1), {Size=UDim2now(0,14,0,14), Position=UDim2now(1,-7,0.5,-7)}):Play() end end)
+    kb.InputBegan:Connect(function(io) 
+        if io.UserInputType == Enum.UserInputType.MouseButton1 then 
+            md = true
+            Tween:Create(knob, TweenInfo.new(0.1), {Size = UDim2now(0, 18, 0, 18), Position = UDim2now(1, -9, 0.5, -9), BackgroundColor3 = Color3.fromRGB(255, 255, 255)}):Play()
+            Tween:Create(knobStroke, TweenInfo.new(0.1), {Transparency = 0.5}):Play()
+        end 
+    end)
+    UIS.InputEnded:Connect(function(io) 
+        if io.UserInputType == Enum.UserInputType.MouseButton1 then 
+            md = false
+            Tween:Create(knob, TweenInfo.new(0.2), {Size = UDim2now(0, 14, 0, 14), Position = UDim2now(1, -7, 0.5, -7), BackgroundColor3 = Color3.fromRGB(200, 200, 200)}):Play()
+            Tween:Create(knobStroke, TweenInfo.new(0.2), {Transparency = 1}):Play()
+        end 
+    end)
     UIS.InputChanged:Connect(function(io) 
         if md and io.UserInputType == Enum.UserInputType.MouseMovement then 
             local pct = math_clamp((io.Position.X - bg.AbsolutePosition.X) / bg.AbsoluteSize.X, 0, 1)
@@ -409,7 +454,7 @@ function UI_Master:AddSlider(page, label, key, min, max, sfx, prec)
     end)
     
     f.MouseEnter:Connect(function() Tween:Create(f, TweenInfo.new(0.2), {BackgroundColor3 = Color3now(25, 35, 30), BackgroundTransparency = 0.4}):Play() end)
-    f.MouseLeave:Connect(function() Tween:Create(f, TweenInfo.new(0.2), {BackgroundColor3 = Color3now(15, 20, 15), BackgroundTransparency = 0.6}):Play() end)
+    f.MouseLeave:Connect(function() Tween:Create(f, TweenInfo.new(0.2), {BackgroundColor3 = Color3now(15, 20, 15), BackgroundTransparency = 0.7}):Play() end)
 end
 
 
